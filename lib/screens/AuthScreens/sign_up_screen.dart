@@ -7,22 +7,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
 
-  @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
   final SignUpController controller = Get.find<SignUpController>();
 
-  @override
-  void dispose() {
-    super.dispose();
-    controller.dispose();
-  }
-
+  // @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(

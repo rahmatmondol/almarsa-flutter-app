@@ -108,21 +108,35 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(height: 30),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    // onPressed: controller.login,
-                    onPressed: () => Get.toNamed(Routes.home),
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Text(
-                      'Login',
-                      style: CustomTextStyles.getMediumStyle(context).copyWith(
-                        color: Colors.white,
-                      ),
-                    ),
+                  child: GetBuilder<LoginController>(
+                    builder: (loginController) {
+                      return ElevatedButton(
+                        onPressed: () async {
+                          bool response = await loginController.login();
+                          if (response) {
+                            Get.offAllNamed(Routes.home);
+                          }
+                        },
+                        // onPressed: () => Get.toNamed(Routes.home),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: loginController.loginProgress
+                            ? CircularProgressIndicator(
+                                color: AppColors.textWhite,
+                              )
+                            : Text(
+                                'Login',
+                                style: CustomTextStyles.getMediumStyle(context)
+                                    .copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(height: 20),
