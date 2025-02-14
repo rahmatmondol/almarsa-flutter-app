@@ -2,14 +2,26 @@
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/constants/custom_text.dart';
 import 'package:almarsa/controllers/sign_up_controller.dart';
-import 'package:almarsa/routes/app_routes.dart';import 'package:flutter/cupertino.dart';
+import 'package:almarsa/routes/app_routes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   SignUpScreen({super.key});
 
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   final SignUpController controller = Get.find<SignUpController>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,30 +67,30 @@ class SignUpScreen extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 // Phone Field
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Phone',
-                    style: CustomTextStyles.getMediumStyle(context),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  controller: controller.phoneController,
-                  keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your phone number',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your phone number';
-                    }
-                    // Add phone validation if needed
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
+                // Align(
+                //   alignment: Alignment.centerLeft,
+                //   child: Text(
+                //     'Phone',
+                //     style: CustomTextStyles.getMediumStyle(context),
+                //   ),
+                // ),
+                // const SizedBox(height: 10),
+                // TextFormField(
+                //   controller: controller.phoneController,
+                //   keyboardType: TextInputType.phone,
+                //   decoration: const InputDecoration(
+                //     hintText: 'Enter your phone number',
+                //     border: OutlineInputBorder(),
+                //   ),
+                //   validator: (value) {
+                //     if (value == null || value.isEmpty) {
+                //       return 'Please enter your phone number';
+                //     }
+                //     // Add phone validation if needed
+                //     return null;
+                //   },
+                // ),
+                // const SizedBox(height: 20),
 
                 // Email Field
                 Align(
@@ -118,7 +130,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Obx(
-                      () => TextFormField(
+                  () => TextFormField(
                     controller: controller.passwordController,
                     obscureText: !controller.isPasswordVisible.value,
                     decoration: InputDecoration(
@@ -156,7 +168,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Obx(
-                      () => TextFormField(
+                  () => TextFormField(
                     controller: controller.confirmPasswordController,
                     obscureText: !controller.isConfirmPasswordVisible.value,
                     decoration: InputDecoration(
@@ -187,21 +199,33 @@ class SignUpScreen extends StatelessWidget {
                 // Sign Up Button
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: controller.signUp,
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  child: GetBuilder<SignUpController>(builder: (controller) {
+                    return ElevatedButton(
+                      onPressed: () async {
+                        bool response = await controller.signUp();
+                        if (response) {
+                          Get.back();
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      'Sign Up',
-                      style: CustomTextStyles.getMediumStyle(context).copyWith(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                      child: controller.signUpInProgress
+                          ? CircularProgressIndicator(
+                              color: AppColors.textWhite,
+                            )
+                          : Text(
+                              'Sign Up',
+                              style: CustomTextStyles.getMediumStyle(context)
+                                  .copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                    );
+                  }),
                 ),
                 const SizedBox(height: 20),
 
@@ -215,7 +239,8 @@ class SignUpScreen extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: 'Sign In!',
-                          style: CustomTextStyles.getSmallStyle(context).copyWith(
+                          style:
+                              CustomTextStyles.getSmallStyle(context).copyWith(
                             color: Colors.blue,
                             fontWeight: FontWeight.bold,
                           ),

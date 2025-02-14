@@ -128,7 +128,8 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
-                    Get.offAllNamed(Routes.signUp);
+                    // Get.offAllNamed(Routes.signUp);
+                    Get.toNamed(Routes.signUp);
                   },
                   child: Text.rich(
                     TextSpan(

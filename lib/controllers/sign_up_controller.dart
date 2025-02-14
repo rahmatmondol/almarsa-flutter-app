@@ -1,4 +1,8 @@
 // signup_controller.dart
+import 'dart:developer';
+
+import 'package:almarsa/constants/urls.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +16,8 @@ class SignUpController extends GetxController {
 
   final RxBool isPasswordVisible = false.obs;
   final RxBool isConfirmPasswordVisible = false.obs;
+
+  bool signUpInProgress = false;
 
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
@@ -30,14 +36,40 @@ class SignUpController extends GetxController {
     return false;
   }
 
-  void signUp() {
-    if (validateAndSave()) {
-      // Add your signup logic here
-      print('Full Name: ${fullNameController.text}');
-      print('Phone: ${phoneController.text}');
-      print('Email: ${emailController.text}');
-      print('Password: ${passwordController.text}');
+  Future<bool> signUp() async {
+    if (!validateAndSave()) return false;
+
+    signUpInProgress = true;
+    update();
+
+    final dio = Dio();
+    try {
+      final response = await dio.post(
+        Urls.signUpUrl(),
+        data: {
+          "name": fullNameController.text,
+          "email": emailController.text,
+          "password": passwordController.text,
+          "password_confirmation": confirmPasswordController.text
+        },
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
+
+      signUpInProgress = false;
+      update();
+
+      return response.data["success"] ?? false;
+    } on DioException catch (e) {
+      log("DioError: ${e.response?.data ?? e.message}");
+    } catch (e) {
+      log("Error: $e");
     }
+
+    signUpInProgress = false;
+    update();
+    return false;
   }
 
   @override

@@ -10,14 +10,14 @@ class CategoryCard extends StatelessWidget {
   final Color iconColor;
 
   const CategoryCard({
-    Key? key,
+    super.key,
     required this.title,
     this.imagePath,
     this.icon,
     required this.onTap,
     this.backgroundColor = const Color(0xFF4A4A4A), // Your dark gray color
     this.iconColor = const Color(0xFFE57373), // Your pink/coral color
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

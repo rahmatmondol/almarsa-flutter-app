@@ -1,6 +1,5 @@
 import 'package:almarsa/controller_binders.dart';
 import 'package:almarsa/routes/app_pages.dart';
-import 'package:almarsa/screens/AuthScreens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
