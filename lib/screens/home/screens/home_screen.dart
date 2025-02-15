@@ -1,4 +1,5 @@
 // pages/home_page.dart
+import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/constants/image_path.dart';
 import 'package:almarsa/screens/home/controller/home_controller.dart';
 import 'package:almarsa/widgets/category_card.dart';
@@ -8,15 +9,39 @@ import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   final HomeController controller = Get.find<HomeController>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      key: _scaffoldKey,
+      appBar: CustomAppBar(
         showBackArrow: false,
         logoText: 'ALMARSA',
+        showMenu: true,
+        scaffoldKey: _scaffoldKey,
+      ),
+      drawer: Drawer(
+        backgroundColor: AppColors.primaryColor,
+        child: ListTileTheme(
+          textColor: AppColors.otherColor,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              SizedBox(
+                height: Get.height / 20,
+              ),
+              ListTile(
+                title: Text("Shop"),
+                onTap: () {
+                  Navigator.pop(context); // Close the drawer
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       body: Obx(
         () {
@@ -33,7 +58,9 @@ class HomeScreen extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.25,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(ImagePath.bannerImage),
+                      image: AssetImage(
+                        ImagePath.bannerImage,
+                      ),
                       fit: BoxFit.cover,
                     ),
                   ),

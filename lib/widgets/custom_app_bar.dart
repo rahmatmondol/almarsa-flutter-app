@@ -11,6 +11,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showMenu;
   final String? logoText;
   final String? logoImagePath;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
 
   const CustomAppBar({
     super.key,
@@ -21,6 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showMenu = true,
     this.logoText,
     this.logoImagePath,
+    this.scaffoldKey,
   });
 
   @override
@@ -28,7 +30,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: AppColors.primaryColor,
       elevation: 0,
-      leadingWidth: (showBackArrow && showSearch) ? 100 : (showBackArrow || showSearch ? 60 : 0),
+      leadingWidth: (showBackArrow && showSearch)
+          ? 100
+          : (showBackArrow || showSearch ? 60 : 0),
       leading: Row(
         children: [
           if (showBackArrow)
@@ -54,18 +58,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: logoImagePath != null
           ? Image.asset(
-        logoImagePath!,
-        height: 40,
-        fit: BoxFit.contain,
-      )
+              logoImagePath!,
+              height: 40,
+              fit: BoxFit.contain,
+            )
           : Text(
-        logoText ?? '',
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+              logoText ?? '',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
       actions: [
         if (showFavorite)
           IconButton(
@@ -89,7 +93,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               Icons.menu,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              scaffoldKey?.currentState?.openDrawer();
+            },
           ),
       ],
     );
