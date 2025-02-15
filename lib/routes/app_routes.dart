@@ -9,6 +9,7 @@ abstract class Routes {
   static const mainShop = _Paths.mainShop;
   static const newThisWeek = _Paths.newThisWeek;
   static const productDetails = _Paths.productDetails;
+  static const bottomNavBarScreen = _Paths.bottomNavBarScreen;
 }
 
 abstract class _Paths {
@@ -22,4 +23,5 @@ abstract class _Paths {
   static const mainShop = '/mainShop';
   static const newThisWeek = '/newThisWeek';
   static const productDetails = '/productDetails';
+  static const bottomNavBarScreen = "/bottomNavBarScreen";
 }

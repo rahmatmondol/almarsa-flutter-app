@@ -19,7 +19,7 @@ class SplashController extends GetxController {
     // print("sajid testing ${sharedPreferences.getString(AppKeys.userInfoKey)}");
 
     if (sharedPreferences.getString(AppKeys.userInfoKey) != null) {
-      Get.offAllNamed(Routes.home);
+      Get.offAllNamed(Routes.bottomNavBarScreen);
     } else {
       Get.offAllNamed(Routes.login);
     }

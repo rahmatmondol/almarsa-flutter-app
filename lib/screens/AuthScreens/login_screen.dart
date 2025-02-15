@@ -114,7 +114,7 @@ class LoginScreen extends StatelessWidget {
                         onPressed: () async {
                           bool response = await loginController.login();
                           if (response) {
-                            Get.offAllNamed(Routes.home);
+                            Get.offAllNamed(Routes.bottomNavBarScreen);
                           }
                         },
                         // onPressed: () => Get.toNamed(Routes.home),
