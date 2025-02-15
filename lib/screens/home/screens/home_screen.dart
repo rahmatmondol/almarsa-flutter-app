@@ -1,4 +1,3 @@
-// pages/home_page.dart
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/constants/image_path.dart';
 import 'package:almarsa/screens/home/controller/home_controller.dart';
@@ -13,6 +12,8 @@ class HomeScreen extends StatelessWidget {
 
   HomeScreen({super.key});
 
+  final List<RxBool> isExpandedList = List.generate(10, (_) => false.obs);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,22 +26,55 @@ class HomeScreen extends StatelessWidget {
       ),
       drawer: Drawer(
         backgroundColor: AppColors.primaryColor,
-        child: ListTileTheme(
-          textColor: AppColors.otherColor,
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              SizedBox(
-                height: Get.height / 20,
-              ),
-              ListTile(
-                title: Text("Shop"),
-                onTap: () {
-                  Navigator.pop(context); // Close the drawer
-                },
-              ),
-            ],
+        child: ListView.separated(
+          itemBuilder: (context, index) => DefaultTextStyle(
+            style: TextStyle(
+              color: AppColors.otherColor,
+              fontSize: 18,
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Shop"),
+                    IconButton(
+                      onPressed: () {
+                        isExpandedList[index].toggle();
+                      },
+                      icon: Obx(
+                        () => Icon(
+                          isExpandedList[index].value
+                              ? Icons.keyboard_arrow_down_outlined
+                              : Icons.arrow_forward_ios_outlined,
+                          color: AppColors.textWhite,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Obx(
+                  () => isExpandedList[index].value
+                      ? DefaultTextStyle(
+                          style: TextStyle(
+                            color: AppColors.textWhite,
+                          ),
+                          child: Column(
+                            children: [
+                              Text("Haha"),
+                              Text("Haha"),
+                            ],
+                          ),
+                        )
+                      : SizedBox.shrink(),
+                ),
+              ],
+            ),
           ),
+          separatorBuilder: (context, index) => const SizedBox(
+            height: 12,
+          ),
+          itemCount: isExpandedList.length,
         ),
       ),
       body: Obx(
