@@ -7,4 +7,6 @@ class Urls {
   static String signUpUrl() => "${_baseUrl}register";
 
   static String contactUrl() => "${_baseUrl}contact";
+
+  static String myProfileInfoUrl() => "${_baseUrl}auth/me";
 }

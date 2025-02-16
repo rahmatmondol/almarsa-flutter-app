@@ -3,6 +3,7 @@ import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/screens/cart_list/screen/cart_page.dart';
 import 'package:almarsa/screens/contact/screen/contact_page.dart';
 import 'package:almarsa/screens/home/screens/home_screen.dart';
+import 'package:almarsa/screens/my_account/screens/my_account.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
     const ContactPage(),
     const ContactPage(),
     const ContactPage(),
-    const ContactPage(),
+    const MyAccount(),
     // const HowItWorksContent(),
     // const ContactContent(),
     // const SettingsContent(),

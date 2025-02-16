@@ -11,6 +11,7 @@ import 'package:almarsa/screens/product_details/controller/product_details_contr
 import 'package:get/get.dart';
 
 import 'controllers/contact_page_controller.dart';
+import 'controllers/my_account_controller.dart';
 
 class ControllerBinders extends Bindings {
   @override
@@ -26,5 +27,6 @@ class ControllerBinders extends Bindings {
     Get.put(NewThisWeekController());
     Get.put(ProductDetailController());
     Get.put(ContactPageController());
+    Get.put(MyAccountController());
   }
 }

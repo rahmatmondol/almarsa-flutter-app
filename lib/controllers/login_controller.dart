@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:almarsa/constants/app_keys.dart';
@@ -59,7 +60,7 @@ class LoginController extends GetxController {
 
         await sharedPreferences.setString(
           AppKeys.userInfoKey,
-          response.data.toString(),
+          jsonEncode(response.data),
         );
 
         loginProgress = false;
