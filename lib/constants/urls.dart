@@ -5,4 +5,6 @@ class Urls {
   static String loginUrl() => "${_baseUrl}login";
 
   static String signUpUrl() => "${_baseUrl}register";
+
+  static String contactUrl() => "${_baseUrl}contact";
 }

@@ -87,6 +87,7 @@ class ProductCard extends StatelessWidget {
                 ),
               ],
             ),
+
             const SizedBox(height: 8),
 
             // Product Title
