@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 
 import 'controllers/contact_page_controller.dart';
 import 'controllers/my_account_controller.dart';
+import 'screens/edit_my_account/controller/edit_my_account_controller.dart';
 
 class ControllerBinders extends Bindings {
   @override
@@ -39,5 +40,6 @@ class ControllerBinders extends Bindings {
       ),
       fenix: true, // This will recreate the controller when needed
     );
+    Get.put(EditMyAccountController());
   }
 }

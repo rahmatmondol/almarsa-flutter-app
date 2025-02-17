@@ -11,7 +11,10 @@ abstract class Routes {
   static const productDetails = _Paths.productDetails;
   static const bottomNavBarScreen = _Paths.bottomNavBarScreen;
   static const contactPage = _Paths.contactPage;
+
   static const productList = _Paths.productList;
+
+  static const editMyAccountPage = _Paths.editMyAccountPage;
 }
 
 abstract class _Paths {
@@ -27,5 +30,9 @@ abstract class _Paths {
   static const productDetails = '/productDetails';
   static const bottomNavBarScreen = "/bottomNavBarScreen";
   static const contactPage = "/contactPage";
+
   static const productList = "/productList";
+
+  static const editMyAccountPage = "/editMyAccountPage";
+
 }

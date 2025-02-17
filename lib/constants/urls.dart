@@ -7,6 +7,7 @@ class Urls {
 
   static String contactUrl = "$_baseUrl/contact";
 
+
   static String myProfileInfoUrl = "$_baseUrl/auth/me";
 
   static String drawerList = "$_baseUrl/categories";
@@ -16,4 +17,9 @@ class Urls {
   static String productsListUnderCategory(int id) => "$_baseUrl/category/$id";
 
   static String productsDetails(String id) => "$_baseUrl/product/$id";
+  
+  static String myProfileInfoUrl() => "${_baseUrl}auth/me";
+
+  static String updateProfileUrl() => "${_baseUrl}auth/update-profile";
+
 }
