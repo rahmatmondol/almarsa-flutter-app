@@ -1,5 +1,5 @@
 import 'package:almarsa/constants/urls.dart';
-import 'package:almarsa/screens/contact/model/contact_response_model.dart';
+import 'package:almarsa/models/contact_response_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 

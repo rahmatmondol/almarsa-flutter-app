@@ -1,4 +1,4 @@
-import 'package:almarsa/screens/home/model/home_model.dart';
+import 'package:almarsa/screens/bottom_nav_bar/home_model.dart';
 import 'package:flutter/material.dart';
 
 // Update CategoryCard to accept HomeItemModel instead of CategoryModel

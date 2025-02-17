@@ -1,5 +1,5 @@
 // lib/models/home_model.dart
-import 'package:almarsa/screens/home/model/category_model.dart';
+import 'package:almarsa/screens/bottom_nav_bar/category_model.dart';
 
 class HomeModel {
   final int id;

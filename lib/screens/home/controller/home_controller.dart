@@ -1,7 +1,7 @@
 // controllers/home_controller.dart
 import 'package:almarsa/constants/urls.dart';
 import 'package:almarsa/routes/app_routes.dart';
-import 'package:almarsa/screens/home/model/home_model.dart';
+import 'package:almarsa/screens/bottom_nav_bar/home_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 

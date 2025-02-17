@@ -1,6 +1,6 @@
 import 'package:almarsa/constants/urls.dart';
-import 'package:almarsa/screens/home/model/category_model.dart';
-import 'package:almarsa/screens/products_list/model/product_models.dart';
+import 'package:almarsa/models/product_models.dart';
+import 'package:almarsa/screens/bottom_nav_bar/category_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 

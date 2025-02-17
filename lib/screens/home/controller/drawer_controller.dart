@@ -1,6 +1,6 @@
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/constants/urls.dart';
-import 'package:almarsa/screens/home/model/category_model.dart';
+import 'package:almarsa/screens/bottom_nav_bar/category_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

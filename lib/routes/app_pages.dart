@@ -57,10 +57,6 @@ class AppPages {
       page: () => NewThisWeekScreen(),
     ),
     GetPage(
-      name: Routes.productDetails,
-      page: () => ProductDetailScreen(),
-    ),
-    GetPage(
       name: Routes.bottomNavBarScreen,
       page: () => MainScreen(),
     ),
@@ -72,5 +68,9 @@ class AppPages {
       name: Routes.productList,
       page: () => ProductListScreen(),
     ),
+    GetPage(
+      name: Routes.productDetails,
+      page: () => ProductDetailScreen(),
+    )
   ];
 }

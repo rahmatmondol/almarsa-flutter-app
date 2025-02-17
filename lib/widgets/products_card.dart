@@ -1,5 +1,7 @@
-import 'package:almarsa/screens/products_list/model/product_models.dart';
+import 'package:almarsa/models/product_models.dart';
 import 'package:flutter/material.dart';
+
+import '../constants/app_colors.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -118,6 +120,15 @@ class ProductCard extends StatelessWidget {
                     // Price Section
                     Row(
                       children: [
+                        Text(
+                          product.price.currency,
+                          style: TextStyle(
+                            color: AppColors.red,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(width: 5),
                         Text(
                           product.price.formatted.price,
                           style: const TextStyle(

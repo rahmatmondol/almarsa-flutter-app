@@ -1,7 +1,7 @@
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/constants/custom_text.dart';
+import 'package:almarsa/screens/bottom_nav_bar/category_model.dart';
 import 'package:almarsa/screens/home/controller/drawer_controller.dart';
-import 'package:almarsa/screens/home/model/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
