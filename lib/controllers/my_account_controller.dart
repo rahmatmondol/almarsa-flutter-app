@@ -11,6 +11,12 @@ class MyAccountController extends GetxController {
 
   late MyAccountModel myAccountModel;
 
+  Future<void> logOut() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    await sharedPreferences.setString(AppKeys.userInfoKey, "");
+  }
+
   Future<void> fetchInfo() async {
     pageLoading = true;
     update();
