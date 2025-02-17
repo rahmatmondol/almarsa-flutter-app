@@ -2,7 +2,6 @@
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/screens/new_this_week/controller/new_this_week_controller.dart';
 import 'package:almarsa/widgets/custom_app_bar.dart';
-import 'package:almarsa/widgets/products_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -46,7 +45,11 @@ class NewThisWeekScreen extends StatelessWidget {
                 itemCount: controller.products.length,
                 itemBuilder: (context, index) {
                   final product = controller.products[index];
-                  return ProductCard(product: product);
+                  return;
+                  //   ProductCard(
+                  //   product: product,
+                  //   onTap: () {},
+                  // );
                 },
               );
             }),

@@ -1,26 +1,23 @@
-// widgets/category_card.dart
+import 'package:almarsa/screens/home/model/home_model.dart';
 import 'package:flutter/material.dart';
 
+// Update CategoryCard to accept HomeItemModel instead of CategoryModel
 class CategoryCard extends StatelessWidget {
-  final String title;
-  final String? imagePath;
-  final IconData? icon;
+  final HomeItemModel item;
   final VoidCallback onTap;
-  final Color backgroundColor;
-  final Color iconColor;
+  final bool isMainShop;
 
   const CategoryCard({
-    super.key,
-    required this.title,
-    this.imagePath,
-    this.icon,
+    Key? key,
+    required this.item,
     required this.onTap,
-    this.backgroundColor = const Color(0xFF4A4A4A), // Your dark gray color
-    this.iconColor = const Color(0xFFE57373), // Your pink/coral color
-  });
+    this.isMainShop = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final isMainShop = item.title.toLowerCase() == 'main-shop';
+
     return GestureDetector(
       onTap: onTap,
       child: Column(
@@ -30,27 +27,29 @@ class CategoryCard extends StatelessWidget {
             width: 100,
             height: 100,
             decoration: BoxDecoration(
-              color: backgroundColor,
+              color: const Color(0xFF4A4A4A),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Center(
-              child: imagePath != null
-                  ? Image.asset(
-                      imagePath!,
+              child: item.icon.isNotEmpty
+                  ? Image.network(
+                      // For other categories, use category icon
+                      isMainShop ? item.icon : item.category.icon ?? item.icon,
                       width: 50,
                       height: 50,
-                      color: iconColor,
+                      color: const Color(0xFFE57373),
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.error,
+                            color: Color(0xFFE57373));
+                      },
                     )
-                  : Icon(
-                      icon ?? Icons.error,
-                      size: 50,
-                      color: iconColor,
-                    ),
+                  : Icon(Icons.category,
+                      size: 50, color: const Color(0xFFE57373)),
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            title,
+            isMainShop ? 'MAIN SHOP' : item.category.name,
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 14,

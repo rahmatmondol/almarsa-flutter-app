@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:almarsa/constants/app_keys.dart';
 import 'package:almarsa/constants/urls.dart';
 import 'package:almarsa/screens/my_account/models/my_account_model.dart';
@@ -27,7 +28,7 @@ class MyAccountController extends GetxController {
     dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
 
     final response = await dio.get(
-      Urls.myProfileInfoUrl(),
+      Urls.myProfileInfoUrl,
     );
 
     myAccountModel = MyAccountModel.fromJson(response.data);
