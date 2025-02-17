@@ -111,6 +111,24 @@ class _MyAccountState extends State<MyAccount> {
                             ),
                           ),
                         ),
+                        InkWell(
+                          onTap: () async {
+                            await controller.logOut();
+                            Get.offAllNamed(Routes.login);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.logout),
+                                const SizedBox(width: 10),
+                                Text("Log out"),
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   );
