@@ -30,8 +30,13 @@ class Urls {
 
   static String homeCategory = "$_baseUrl/home";
 
+  static String wishListUrl = "$_baseUrl/auth/wishlist";
+
+  // static String wishListRemoveUrl = "$_baseUrl/auth/wishlist/1";
+
+  static String addToBasketUrl = "$_baseUrl/auth/cart";
+
   static String productsListUnderCategory(int id) => "$_baseUrl/category/$id";
 
   static String productsDetails(String id) => "$_baseUrl/product/$id";
-
 }

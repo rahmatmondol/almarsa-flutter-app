@@ -1,8 +1,12 @@
 // controllers/product_details_controller.dart
+import 'dart:convert';
+
+import 'package:almarsa/constants/app_keys.dart';
 import 'package:almarsa/constants/urls.dart';
 import 'package:almarsa/models/product_details_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductDetailController extends GetxController {
   final Dio dio;
@@ -70,7 +74,43 @@ class ProductDetailController extends GetxController {
     }
   }
 
-  void toggleWishlist() {
+  Future<void> toggleWishlist({
+    required String productId,
+  }) async {
+    Dio dio = Dio();
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    final String userInfoString =
+        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
+
+    final userInfo = jsonDecode(userInfoString);
+
+    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
+
+    if (isInWishlist.isFalse) {
+      try {
+        await dio.post(
+          Urls.wishListUrl,
+          data: {
+            "product_id": productId.toString(),
+            "quantity": quantity.toString(),
+          },
+          options: Options(
+            followRedirects: true,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          ),
+        );
+      } on DioException catch (e) {
+        print(e.toString());
+        return;
+      }
+    } else {
+      //   TODO: delete from wishlist
+    }
+
     isInWishlist.toggle();
     Get.snackbar(
       'Wishlist Updated',
@@ -79,8 +119,44 @@ class ProductDetailController extends GetxController {
     );
   }
 
-  void addToBasket() {
+  Future<void> addToBasket({
+    required String productId,
+  }) async {
     if (product.value == null) return;
+
+    Dio dio = Dio();
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    final String userInfoString =
+        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
+
+    final userInfo = jsonDecode(userInfoString);
+
+    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
+
+    if (isInWishlist.isFalse) {
+      try {
+        await dio.post(
+          Urls.addToBasketUrl,
+          data: {
+            "product_id": productId.toString(),
+            "quantity": quantity.toString(),
+          },
+          options: Options(
+            followRedirects: true,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          ),
+        );
+      } on DioException catch (e) {
+        print(e.toString());
+        return;
+      }
+    } else {
+      //   TODO: delete from basket
+    }
 
     Get.snackbar(
       'Added to Basket',
