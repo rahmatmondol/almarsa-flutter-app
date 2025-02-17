@@ -72,5 +72,6 @@ class AppPages {
       name: Routes.editMyAccountPage,
       page: () => EditMyAccountPage(),
     ),
+
   ];
 }
