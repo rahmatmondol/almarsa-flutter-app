@@ -68,9 +68,11 @@ class AppPages {
       name: Routes.productList,
       page: () => ProductListScreen(),
     ),
+
     GetPage(
       name: Routes.productDetails,
       page: () => ProductDetailScreen(),
     )
+
   ];
 }

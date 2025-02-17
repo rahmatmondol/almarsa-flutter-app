@@ -37,7 +37,7 @@ class EditMyAccountController extends GetxController {
 
     try {
       await dio.post(
-        Urls.updateProfileUrl(),
+        Urls.updateProfileUrl,
         options: Options(
           headers: {
             'Content-Type': 'application/json',

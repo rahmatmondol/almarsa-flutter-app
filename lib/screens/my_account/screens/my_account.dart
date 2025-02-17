@@ -1,6 +1,7 @@
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/controllers/my_account_controller.dart';
 import 'package:almarsa/routes/app_routes.dart';
+import 'package:almarsa/screens/account_details/screens/account_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -49,65 +50,29 @@ class _MyAccountState extends State<MyAccount> {
                         const SizedBox(height: 16),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Card(
-                            color: AppColors.primaryColor,
-                            surfaceTintColor: Colors.white,
-                            elevation: 3,
-                            child: Column(
-                              children: [
-                                _buildInfoListTile(
-                                  icon: Icon(
-                                    Icons.person,
-                                    color: Colors.white,
-                                  ),
-                                  title: controller.myAccountModel.name ?? "",
-                                ),
-                                Divider(
-                                  thickness: 0.3,
-                                  color: Colors.white,
-                                ),
-                                _buildInfoListTile(
-                                  icon: Icon(
-                                    Icons.location_on,
-                                    color: Colors.white,
-                                  ),
-                                  title:
+                          child: InkWell(
+                            onTap: () {
+                              Get.to(
+                                AccountDetails(
+                                  name: controller.myAccountModel.name ?? "",
+                                  address:
                                       controller.myAccountModel.address ?? "",
+                                  city: controller.myAccountModel.city ?? "",
+                                  phone: controller.myAccountModel.phone ?? "",
+                                  email: controller.myAccountModel.email ?? "",
                                 ),
-                                Divider(
-                                  thickness: 0.3,
+                              );
+                            },
+                            child: Card(
+                              color: AppColors.primaryColor,
+                              surfaceTintColor: Colors.white,
+                              child: _buildInfoListTile(
+                                title: "Account Details",
+                                icon: Icon(
+                                  Icons.person,
                                   color: Colors.white,
                                 ),
-                                _buildInfoListTile(
-                                  icon: Icon(
-                                    Icons.location_city,
-                                    color: Colors.white,
-                                  ),
-                                  title: controller.myAccountModel.city ?? "",
-                                ),
-                                Divider(
-                                  thickness: 0.3,
-                                  color: Colors.white,
-                                ),
-                                _buildInfoListTile(
-                                  icon: Icon(
-                                    Icons.phone_android,
-                                    color: Colors.white,
-                                  ),
-                                  title: controller.myAccountModel.phone ?? "",
-                                ),
-                                Divider(
-                                  thickness: 0.3,
-                                  color: Colors.white,
-                                ),
-                                _buildInfoListTile(
-                                  icon: Icon(
-                                    Icons.email,
-                                    color: Colors.white,
-                                  ),
-                                  title: controller.myAccountModel.email ?? "",
-                                ),
-                              ],
+                              ),
                             ),
                           ),
                         ),
@@ -158,7 +123,7 @@ class _MyAccountState extends State<MyAccount> {
                               color: AppColors.primaryColor,
                               surfaceTintColor: Colors.white,
                               child: _buildInfoListTile(
-                                title: "Log out",
+                                title: "Log Out",
                                 icon: Icon(
                                   Icons.logout,
                                   color: Colors.white,
