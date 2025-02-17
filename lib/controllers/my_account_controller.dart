@@ -1,7 +1,8 @@
 import 'dart:convert';
+
 import 'package:almarsa/constants/app_keys.dart';
 import 'package:almarsa/constants/urls.dart';
-import 'package:almarsa/screens/my_account/models/my_account_model.dart';
+import 'package:almarsa/models/my_account_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';

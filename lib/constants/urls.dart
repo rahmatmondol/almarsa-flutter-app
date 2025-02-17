@@ -33,4 +33,5 @@ class Urls {
   static String productsListUnderCategory(int id) => "$_baseUrl/category/$id";
 
   static String productsDetails(String id) => "$_baseUrl/product/$id";
+
 }
