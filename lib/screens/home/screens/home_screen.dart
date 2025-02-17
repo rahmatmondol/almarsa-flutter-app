@@ -23,62 +23,7 @@ class HomeScreen extends StatelessWidget {
         showMenu: true,
         scaffoldKey: _scaffoldKey,
       ),
-
       drawer: DrawerMenu(),
-      drawer: Drawer(
-        backgroundColor: AppColors.primaryColor,
-        child: ListView.separated(
-          itemBuilder: (context, index) => DefaultTextStyle(
-            style: TextStyle(
-              color: AppColors.otherColor,
-              fontSize: 18,
-            ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Shop"),
-                    IconButton(
-                      onPressed: () {
-                        isExpandedList[index].toggle();
-                      },
-                      icon: Obx(
-                        () => Icon(
-                          isExpandedList[index].value
-                              ? Icons.keyboard_arrow_down_outlined
-                              : Icons.arrow_forward_ios_outlined,
-                          color: AppColors.textWhite,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Obx(
-                  () => isExpandedList[index].value
-                      ? DefaultTextStyle(
-                          style: TextStyle(
-                            color: AppColors.textWhite,
-                          ),
-                          child: Column(
-                            children: [
-                              Text("Haha"),
-                              Text("Haha"),
-                              Text("Haha"),
-                            ],
-                          ),
-                        )
-                      : SizedBox.shrink(),
-                ),
-              ],
-            ),
-          ),
-          separatorBuilder: (context, index) => const SizedBox(
-            height: 12,
-          ),
-          itemCount: isExpandedList.length,
-        ),
-      ),
       body: Obx(
         () {
           if (controller.isLoading.value) {
