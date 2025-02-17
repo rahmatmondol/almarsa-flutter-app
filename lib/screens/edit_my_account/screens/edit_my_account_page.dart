@@ -40,7 +40,6 @@ class _EditMyAccountPageState extends State<EditMyAccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         title: Text(
           "Edit my Profile",
         ),

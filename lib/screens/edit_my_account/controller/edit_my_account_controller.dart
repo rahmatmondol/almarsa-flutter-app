@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:almarsa/constants/app_keys.dart';
 import 'package:almarsa/constants/urls.dart';
+import 'package:almarsa/controllers/my_account_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -53,6 +54,9 @@ class EditMyAccountController extends GetxController {
           "phone": phone,
         },
       );
+
+      await Get.find<MyAccountController>().fetchInfo();
+
       Get.snackbar(
         'Update successful',
         "",
