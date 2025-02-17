@@ -12,6 +12,7 @@ import 'package:almarsa/screens/home/screens/home_screen.dart';
 import 'package:almarsa/screens/main_shop/screen/main_shop_screen.dart';
 import 'package:almarsa/screens/new_this_week/screen/new_this_week_screen.dart';
 import 'package:almarsa/screens/product_details/screen/product_detail_screen.dart';
+import 'package:almarsa/screens/products_list/screen/product_list_screen.dart';
 import 'package:get/get.dart';
 
 import 'app_routes.dart';
@@ -57,10 +58,6 @@ class AppPages {
       page: () => NewThisWeekScreen(),
     ),
     GetPage(
-      name: Routes.productDetails,
-      page: () => ProductDetailScreen(),
-    ),
-    GetPage(
       name: Routes.bottomNavBarScreen,
       page: () => MainScreen(),
     ),
@@ -69,6 +66,14 @@ class AppPages {
       page: () => ContactPage(),
     ),
     GetPage(
+      name: Routes.productList,
+      page: () => ProductListScreen(),
+    ),
+    GetPage(
+      name: Routes.productDetails,
+      page: () => ProductDetailScreen(),
+    )
+
       name: Routes.editMyAccountPage,
       page: () => EditMyAccountPage(),
     ),

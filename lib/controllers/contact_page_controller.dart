@@ -1,5 +1,5 @@
 import 'package:almarsa/constants/urls.dart';
-import 'package:almarsa/screens/contact/model/contact_response_model.dart';
+import 'package:almarsa/models/contact_response_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +13,7 @@ class ContactPageController extends GetxController {
 
     Dio dio = Dio();
 
-    final data = await dio.get(Urls.contactUrl());
+    final data = await dio.get(Urls.contactUrl);
     contactResponseModel = ContactResponseModel.fromJson(data.data);
 
     pageLoad = false;

@@ -1,18 +1,17 @@
-import 'package:almarsa/constants/app_colors.dart';
-import 'package:almarsa/constants/image_path.dart';
+import 'package:almarsa/constants/custom_text.dart';
 import 'package:almarsa/screens/home/controller/home_controller.dart';
 import 'package:almarsa/widgets/category_card.dart';
 import 'package:almarsa/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'drawer_menu_screen.dart';
+
 class HomeScreen extends StatelessWidget {
   final HomeController controller = Get.find<HomeController>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   HomeScreen({super.key});
-
-  final List<RxBool> isExpandedList = List.generate(10, (_) => false.obs);
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +23,8 @@ class HomeScreen extends StatelessWidget {
         showMenu: true,
         scaffoldKey: _scaffoldKey,
       ),
+
+      drawer: DrawerMenu(),
       drawer: Drawer(
         backgroundColor: AppColors.primaryColor,
         child: ListView.separated(
@@ -93,9 +94,7 @@ class HomeScreen extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.25,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(
-                        ImagePath.bannerImage,
-                      ),
+                      image: NetworkImage(controller.homeData!.image),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -103,25 +102,28 @@ class HomeScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.3),
                     ),
-                    child: const Column(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'GOOD FOOD',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        // App Icon
+                        Image.network(
+                          controller.homeData!.icon,
+                          height: 50,
+                          color: Colors.redAccent,
+                          // Making icon white to match text
+                          errorBuilder: (context, error, stackTrace) {
+                            return const SizedBox(height: 50);
+                          },
                         ),
+                        const SizedBox(height: 16),
+                        // Title
                         Text(
-                          'FEELS GOOD',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          controller.homeData!.title.toUpperCase(),
+                          style: CustomTextStyles.getLargeStyle2(context),
                         ),
+                        // Description
+                        Text(controller.homeData!.description.toUpperCase(),
+                            style: CustomTextStyles.getLargeStyle3(context)),
                       ],
                     ),
                   ),
@@ -131,9 +133,7 @@ class HomeScreen extends StatelessWidget {
                 GridView.builder(
                   padding: const EdgeInsets.all(16),
                   physics: const NeverScrollableScrollPhysics(),
-                  // Disable grid scroll
                   shrinkWrap: true,
-                  // Important for nested scroll
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 1,
@@ -142,12 +142,12 @@ class HomeScreen extends StatelessWidget {
                   ),
                   itemCount: controller.categories.length,
                   itemBuilder: (context, index) {
-                    final category = controller.categories[index];
+                    final item = controller.categories[index];
+                    final isMainShop = item.title.toLowerCase() == 'main-shop';
                     return CategoryCard(
-                      title: category.title,
-                      icon: category.icon,
-                      imagePath: category.imagePath,
-                      onTap: () => Get.toNamed(category.route),
+                      item: item,
+                      isMainShop: isMainShop,
+                      onTap: () => controller.navigateToProductList(item),
                     );
                   },
                 ),

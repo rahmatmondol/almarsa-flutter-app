@@ -1,6 +1,4 @@
-import 'package:almarsa/routes/app_routes.dart';
 import 'package:almarsa/screens/main_shop/controller/main_shop_controller.dart';
-import 'package:almarsa/widgets/category_card.dart';
 import 'package:almarsa/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -76,12 +74,11 @@ class MainShopScreen extends StatelessWidget {
                 itemCount: controller.categories.length,
                 itemBuilder: (context, index) {
                   final category = controller.categories[index];
-                  return CategoryCard(
-                    title: category.title,
-                    imagePath: category.imagePath,
-                    icon: category.icon,
-                    onTap: () => Get.toNamed(Routes.home),
-                  );
+                  return;
+                  //   CategoryCard(
+                  //
+                  //   onTap: () => Get.toNamed(Routes.home), item: item,
+                  // );
                 },
               ),
             ],

@@ -45,7 +45,7 @@ class SignUpController extends GetxController {
     final dio = Dio();
     try {
       final response = await dio.post(
-        Urls.signUpUrl(),
+        Urls.signUpUrl,
         data: {
           "name": fullNameController.text,
           "email": emailController.text,
