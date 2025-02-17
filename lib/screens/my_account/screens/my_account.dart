@@ -1,5 +1,6 @@
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/controllers/my_account_controller.dart';
+import 'package:almarsa/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -94,7 +95,9 @@ class _MyAccountState extends State<MyAccount> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Get.toNamed(Routes.editMyAccountPage);
+                          },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
@@ -103,7 +106,7 @@ class _MyAccountState extends State<MyAccount> {
                               children: [
                                 Icon(Icons.settings),
                                 const SizedBox(width: 10),
-                                Text("Edit my account"),
+                                Text("Edit My Account"),
                               ],
                             ),
                           ),

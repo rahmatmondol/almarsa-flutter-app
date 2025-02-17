@@ -9,4 +9,6 @@ class Urls {
   static String contactUrl() => "${_baseUrl}contact";
 
   static String myProfileInfoUrl() => "${_baseUrl}auth/me";
+
+  static String updateProfileUrl() => "${_baseUrl}auth/update-profile";
 }
