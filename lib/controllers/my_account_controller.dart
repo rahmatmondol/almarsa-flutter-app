@@ -33,7 +33,7 @@ class MyAccountController extends GetxController {
     dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
 
     final response = await dio.get(
-      Urls.myProfileInfoUrl(),
+      Urls.myProfileInfoUrl,
     );
 
     myAccountModel = MyAccountModel.fromJson(response.data);

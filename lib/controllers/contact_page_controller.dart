@@ -13,7 +13,7 @@ class ContactPageController extends GetxController {
 
     Dio dio = Dio();
 
-    final data = await dio.get(Urls.contactUrl());
+    final data = await dio.get(Urls.contactUrl);
     contactResponseModel = ContactResponseModel.fromJson(data.data);
 
     pageLoad = false;

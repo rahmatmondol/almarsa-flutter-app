@@ -44,7 +44,7 @@ class LoginController extends GetxController {
       try {
 
         final response = await dio.post(
-          Urls.loginUrl(),
+          Urls.loginUrl,
           data: {
             "email": emailController.text,
             "password": passwordController.text,
