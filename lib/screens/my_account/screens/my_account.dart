@@ -136,7 +136,7 @@ class _MyAccountState extends State<MyAccount> {
                           child: InkWell(
                             onTap: () async {
                               await controller.logOut();
-                              Get.offAllNamed(Routes.login);
+                              Get.offAllNamed(Routes.bottomNavBarScreen);
                             },
                             child: Card(
                               color: AppColors.primaryColor,

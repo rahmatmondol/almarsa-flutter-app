@@ -7,6 +7,8 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../routes/app_routes.dart';
+
 class MyAccountController extends GetxController {
   bool pageLoading = false;
 
@@ -19,12 +21,17 @@ class MyAccountController extends GetxController {
   }
 
   Future<void> fetchInfo() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    if (sharedPreferences.getString(AppKeys.userInfoKey)?.isNotEmpty ?? false) {
+    } else {
+      Get.offAllNamed(Routes.login);
+    }
+
     pageLoading = true;
     update();
 
     Dio dio = Dio();
-
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     final String userInfoString =
         sharedPreferences.getString(AppKeys.userInfoKey) ?? "";

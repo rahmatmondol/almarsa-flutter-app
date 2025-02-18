@@ -5,6 +5,7 @@ import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/constants/app_keys.dart';
 import 'package:almarsa/constants/urls.dart';
 import 'package:almarsa/models/product_details_model.dart';
+import 'package:almarsa/routes/app_routes.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -94,9 +95,14 @@ class ProductDetailController extends GetxController {
   }) async {
     if (product.value == null) return;
 
-    Dio dio = Dio();
-
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    if (sharedPreferences.getString(AppKeys.userInfoKey)?.isNotEmpty ?? false) {
+    } else {
+      Get.offAllNamed(Routes.login);
+    }
+
+    Dio dio = Dio();
 
     final String userInfoString =
         sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
