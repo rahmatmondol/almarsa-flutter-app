@@ -7,11 +7,11 @@ import 'constants/app_colors.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp( MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,16 +22,18 @@ class MyApp extends StatelessWidget {
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
       theme: ThemeData(
-          // colorSchemeSeed: AppColors.primaryColor,
-          textTheme: _buildTextTheme(),
-          inputDecorationTheme: _inputDecorationTheme(),
-          elevatedButtonTheme: buildElevatedButtonThemeData(),
-          appBarTheme: _buildAppBarTheme(),
-          textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                  foregroundColor: AppColors.primaryColor,))),
+        // colorSchemeSeed: AppColors.primaryColor,
+        textTheme: _buildTextTheme(),
+        inputDecorationTheme: _inputDecorationTheme(),
+        elevatedButtonTheme: buildElevatedButtonThemeData(),
+        appBarTheme: _buildAppBarTheme(),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: AppColors.primaryColor,
+          ),
+        ),
+      ),
     );
-
   }
 
   AppBarTheme _buildAppBarTheme() {
@@ -68,7 +70,7 @@ class MyApp extends StatelessWidget {
 
   InputDecorationTheme _inputDecorationTheme() => InputDecorationTheme(
       hintStyle:
-      const TextStyle(color: Colors.grey, fontWeight: FontWeight.w400),
+          const TextStyle(color: Colors.grey, fontWeight: FontWeight.w400),
       border: _outlineInputBorder,
       enabledBorder: _outlineInputBorder,
       focusedBorder: _outlineInputBorder,
@@ -80,4 +82,3 @@ class MyApp extends StatelessWidget {
       borderSide: const BorderSide(color: AppColors.primaryColor),
       borderRadius: BorderRadius.circular(16));
 }
-
