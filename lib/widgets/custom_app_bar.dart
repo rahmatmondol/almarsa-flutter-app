@@ -1,4 +1,5 @@
 import 'package:almarsa/constants/app_colors.dart';
+import 'package:almarsa/routes/app_routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -51,7 +52,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 CupertinoIcons.search,
                 color: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: () => Get.toNamed(Routes.searchPage),
             ),
         ],
       ),
