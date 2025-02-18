@@ -40,11 +40,6 @@ class ProductSearchController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    // Initialize any required data
-  }
 
   @override
   void onClose() {

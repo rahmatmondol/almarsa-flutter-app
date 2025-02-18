@@ -29,4 +29,5 @@ class Urls {
 
   static String search() => "$_baseUrl/product-search";
 
+  static String getWishListUrl = "$_baseUrl/auth/wishlists";
 }

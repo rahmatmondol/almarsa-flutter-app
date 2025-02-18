@@ -114,6 +114,7 @@ class ProductListController extends GetxController {
     }
   }
 
+  @override
   void refresh() {
     offset = 1;
     fetchProducts();

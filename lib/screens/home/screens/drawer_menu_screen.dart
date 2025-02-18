@@ -30,7 +30,7 @@ class DrawerMenu extends StatelessWidget {
                   ),
                   ...controller.parentCategories
                       .map((category) => _buildCategoryTile(category, 0))
-                      .toList(),
+                      ,
                 ],
               ),
       ),

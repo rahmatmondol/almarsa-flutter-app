@@ -1,5 +1,4 @@
 import 'package:almarsa/routes/app_routes.dart';
-import 'package:almarsa/screens/product_details/screen/product_detail_screen.dart';
 import 'package:almarsa/screens/search/controller/search_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
