@@ -1,11 +1,11 @@
 // controllers/home_controller.dart
 import 'package:almarsa/constants/urls.dart';
+import 'package:almarsa/models/category_model.dart';
+import 'package:almarsa/models/home_model.dart';
 import 'package:almarsa/routes/app_routes.dart';
-import 'package:almarsa/screens/bottom_nav_bar/home_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
-// controllers/home_controller.dart
 class HomeController extends GetxController {
   final dio = Dio();
   final _homeData = Rxn<HomeModel>();
@@ -13,7 +13,50 @@ class HomeController extends GetxController {
 
   HomeModel? get homeData => _homeData.value;
 
-  List<HomeItemModel> get categories => _homeData.value?.items ?? [];
+  // Modified to always include Main Shop
+  List<HomeItemModel> get categories {
+    List<HomeItemModel> allCategories = _homeData.value?.items ?? [];
+
+    // Check if Main Shop already exists
+    bool hasMainShop = allCategories
+        .any((item) => item.title.toLowerCase().contains('main-shop'));
+
+    // If Main Shop doesn't exist, add it
+    if (!hasMainShop) {
+      allCategories = [
+        HomeItemModel(
+          id: -1,
+          // Special ID for main shop
+          title: 'Main Shop',
+          icon: 'assets/icons/main_shop.png',
+          // Add a default icon
+          status: true,
+          categoryId: -1,
+          homeId: null,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+          category: CategoryModel(
+            id: -1,
+            name: 'Main Shop',
+            slug: 'main-shop',
+            description: 'Main Shop Category',
+            status: '1',
+            collectionId: '',
+            productCount: '0',
+            image: null,
+            icon: null,
+            parentId: null,
+            childrenRecursive: [],
+            createdAt: DateTime.now(),
+            updatedAt: DateTime.now(),
+          ),
+        ),
+        ...allCategories,
+      ];
+    }
+
+    return allCategories;
+  }
 
   @override
   void onInit() {
@@ -45,12 +88,16 @@ class HomeController extends GetxController {
   }
 
   void navigateToProductList(HomeItemModel item) {
-    if (item.title.toLowerCase() == 'main-shop') {
-      // Handle main shop navigation differently if needed
-      Get.toNamed('/main-shop');
+    // Check if it's the main shop either by ID or title
+    if (item.id == -1 || item.title.toLowerCase().contains('main-shop')) {
+      Get.toNamed(Routes.mainShop);
     } else {
-      // Navigate to product list with category id
       Get.toNamed(Routes.productList, arguments: {'category': item.category});
     }
+  }
+
+  // Optional: Method to refresh data
+  Future<void> refreshData() async {
+    await fetchHomeData();
   }
 }
