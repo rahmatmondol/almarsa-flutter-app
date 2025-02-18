@@ -1,10 +1,9 @@
 // main_screen.dart
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/screens/cart_list/screen/cart_page.dart';
-import 'package:almarsa/screens/contact/screen/contact_page.dart';
-import 'package:almarsa/screens/edit_my_account/screens/edit_my_account_page.dart';
 import 'package:almarsa/screens/home/screens/home_screen.dart';
 import 'package:almarsa/screens/my_account/screens/my_account.dart';
+import 'package:almarsa/screens/wish_list/screens/wishlist_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -23,9 +22,7 @@ class _MainScreenState extends State<MainScreen> {
     HomeScreen(),
     const CartPage(),
 
-    const ContactPage(),
-    const ContactPage(),
-    const EditMyAccountPage(),
+    const WishlistPage(),
     const MyAccount(),
     // const HowItWorksContent(),
     // const ContactContent(),
@@ -54,10 +51,8 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             _buildNavItem(0, CupertinoIcons.home, 'Home'),
             _buildNavItem(1, CupertinoIcons.shopping_cart, 'Basket'),
-            _buildNavItem(2, CupertinoIcons.info_circle, 'How it works'),
-            _buildNavItem(3, CupertinoIcons.chat_bubble, 'Contact'),
-            _buildNavItem(4, CupertinoIcons.settings, 'Settings'),
-            _buildNavItem(5, CupertinoIcons.person, 'Account'),
+            _buildNavItem(2, CupertinoIcons.heart, 'Wishlist'),
+            _buildNavItem(3, CupertinoIcons.person, 'Account'),
           ],
         ),
       ),
