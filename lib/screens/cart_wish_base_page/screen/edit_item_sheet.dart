@@ -41,7 +41,11 @@ class _EditItemSheetState extends State<EditItemSheet> {
               Container(
                 width: 100,
                 height: 100,
-                color: Colors.grey,
+                // color: Colors.grey,
+                child: Image.network(
+                  widget.product.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
               const SizedBox(width: 16),
               Expanded(
