@@ -1,5 +1,5 @@
 // models/product_response.dart
-import 'package:almarsa/screens/bottom_nav_bar/category_model.dart';
+import 'package:almarsa/models/category_model.dart';
 
 class ProductResponse {
   final bool success;

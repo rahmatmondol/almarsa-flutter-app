@@ -41,5 +41,6 @@ class ControllerBinders extends Bindings {
       fenix: true, // This will recreate the controller when needed
     );
     Get.put(EditMyAccountController());
+    Get.put(MainShopController());
   }
 }

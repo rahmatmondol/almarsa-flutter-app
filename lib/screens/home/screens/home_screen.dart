@@ -75,6 +75,29 @@ class HomeScreen extends StatelessWidget {
                 ),
 
                 // Categories Grid
+                // GridView.builder(
+                //   padding: const EdgeInsets.all(16),
+                //   physics: const NeverScrollableScrollPhysics(),
+                //   shrinkWrap: true,
+                //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                //     crossAxisCount: 2,
+                //     childAspectRatio: 1,
+                //     crossAxisSpacing: 16,
+                //     mainAxisSpacing: 16,
+                //   ),
+                //   itemCount: controller.categories.length,
+                //   itemBuilder: (context, index) {
+                //     final item = controller.categories[index];
+                //     final isMainShop = item.title.toLowerCase() == 'main-shop';
+                //     return CategoryCard(
+                //       item: item,
+                //       isMainShop: isMainShop,
+                //       onTap: () => controller.navigateToProductList(item),
+                //     );
+                //   },
+                // ),
+                // In HomeScreen's GridView.builder:
+
                 GridView.builder(
                   padding: const EdgeInsets.all(16),
                   physics: const NeverScrollableScrollPhysics(),
@@ -88,7 +111,9 @@ class HomeScreen extends StatelessWidget {
                   itemCount: controller.categories.length,
                   itemBuilder: (context, index) {
                     final item = controller.categories[index];
-                    final isMainShop = item.title.toLowerCase() == 'main-shop';
+                    // Check if the title contains 'main-shop' case insensitive
+                    final isMainShop =
+                        item.title.toLowerCase().contains('main-shop');
                     return CategoryCard(
                       item: item,
                       isMainShop: isMainShop,

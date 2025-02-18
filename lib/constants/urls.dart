@@ -1,18 +1,3 @@
-// class Urls {
-//   static final String _baseUrl =
-//       "http://app.almarsa-gourmet.com/public/api/v1/";
-//
-//   static String loginUrl() => "${_baseUrl}login";
-//
-//   static String signUpUrl() => "${_baseUrl}register";
-//
-//   static String contactUrl() => "${_baseUrl}contact";
-//
-//   static String myProfileInfoUrl() => "${_baseUrl}auth/me";
-//
-//
-// }
-
 class Urls {
   static final String _baseUrl = "http://app.almarsa-gourmet.com/public/api/v1";
 
@@ -29,6 +14,8 @@ class Urls {
   static String drawerList = "$_baseUrl/categories";
 
   static String homeCategory = "$_baseUrl/home";
+
+  static String mainShop = "$_baseUrl/shop";
 
   static String wishListUrl = "$_baseUrl/auth/wishlist";
 

@@ -1,4 +1,4 @@
-import 'package:almarsa/screens/bottom_nav_bar/home_model.dart';
+import 'package:almarsa/models/home_model.dart';
 import 'package:flutter/material.dart';
 
 // Update CategoryCard to accept HomeItemModel instead of CategoryModel
@@ -16,7 +16,9 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMainShop = item.title.toLowerCase() == 'main-shop';
+    final bool isMainShopItem = isMainShop ||
+        item.id == -1 ||
+        item.title.toLowerCase().contains('main-shop');
 
     return GestureDetector(
       onTap: onTap,

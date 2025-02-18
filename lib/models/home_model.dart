@@ -1,5 +1,5 @@
 // lib/models/home_model.dart
-import 'package:almarsa/screens/bottom_nav_bar/category_model.dart';
+import 'package:almarsa/models/category_model.dart';
 
 class HomeModel {
   final int id;
@@ -44,7 +44,7 @@ class HomeItemModel {
   final String icon;
   final bool status;
   final int categoryId;
-  final int homeId;
+  final int? homeId;
   final DateTime createdAt;
   final DateTime updatedAt;
   final CategoryModel category;
@@ -55,7 +55,7 @@ class HomeItemModel {
     required this.icon,
     required this.status,
     required this.categoryId,
-    required this.homeId,
+    this.homeId,
     required this.createdAt,
     required this.updatedAt,
     required this.category,
