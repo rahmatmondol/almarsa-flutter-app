@@ -307,7 +307,11 @@ class ProductDetailScreen extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: controller.toggleWishlist,
+                          onPressed: () async {
+                            await controller.toggleWishlist(
+                              productId: product.id,
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey[700],
                             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -317,11 +321,13 @@ class ProductDetailScreen extends StatelessWidget {
                             children: [
                               const Text('ADD TO WISHLIST'),
                               const SizedBox(width: 8),
-                              Obx(() => Icon(
-                                    controller.isInWishlist.value
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                  )),
+                              Obx(
+                                () => Icon(
+                                  controller.isInWishlist.value
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -330,7 +336,11 @@ class ProductDetailScreen extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: controller.addToBasket,
+                          onPressed: () async {
+                            await controller.addToBasket(
+                              productId: product.id,
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Theme.of(context).primaryColor,
                             padding: const EdgeInsets.symmetric(vertical: 16),
