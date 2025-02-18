@@ -1,7 +1,9 @@
 // Example usage for Cart Page
+import 'package:almarsa/screens/cart_list/controllers/cart_page_controller.dart';
 import 'package:almarsa/screens/cart_wish_base_page/model/products_list_model.dart';
 import 'package:almarsa/screens/cart_wish_base_page/screen/product_list_base_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -11,20 +13,22 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  final List<Product> cartItems = [
-    Product(
-      id: '1',
-      name: 'Product name',
-      description: 'Description of product',
-      price: 3.500,
-    ),
-    // Add more products as needed
-  ];
+  @override
+  void initState() {
+    super.initState();
+    initialPageSetup();
+  }
 
-  void _removeItem(Product product) {
-    setState(() {
-      cartItems.remove(product);
-    });
+  Future<void> initialPageSetup() async {
+    await Get.find<CartPageController>().fetchWishList();
+  }
+
+  Future<void> _removeItem(Product product) async {
+    await Get.find<CartPageController>().removeItem(
+      product: product,
+    );
+    Get.find<CartPageController>().cartItems.remove(product);
+    setState(() {});
   }
 
   void _updateQuantity(Product product, int newQuantity) {
@@ -35,11 +39,16 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ProductListPage(
-      title: 'YOUR BASKET',
-      products: cartItems,
-      onRemove: _removeItem,
-      onQuantityChanged: _updateQuantity,
+    return GetBuilder<CartPageController>(
+      builder: (controller) {
+        return ProductListPage(
+          title: 'YOUR BASKET',
+          products: controller.cartItems,
+          onRemove: _removeItem,
+          onQuantityChanged: _updateQuantity,
+          showTitle: true,
+        );
+      },
     );
   }
 }

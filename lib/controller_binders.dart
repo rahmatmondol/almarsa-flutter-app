@@ -4,13 +4,14 @@ import 'package:almarsa/controllers/login_controller.dart';
 import 'package:almarsa/controllers/otp_controller.dart';
 import 'package:almarsa/controllers/sign_up_controller.dart';
 import 'package:almarsa/controllers/splash_controller.dart';
+import 'package:almarsa/screens/cart_list/controllers/cart_page_controller.dart';
 import 'package:almarsa/screens/home/controller/drawer_controller.dart';
 import 'package:almarsa/screens/home/controller/home_controller.dart';
 import 'package:almarsa/screens/main_shop/controller/main_shop_controller.dart';
 import 'package:almarsa/screens/products_list/controller/product_list_controller.dart';
 import 'package:almarsa/screens/search/controller/search_controller.dart';
+import 'package:almarsa/screens/wish_list/controllers/wish_list_controller.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'controllers/contact_page_controller.dart';
@@ -42,5 +43,7 @@ class ControllerBinders extends Bindings {
     Get.put(EditMyAccountController());
     Get.put(MainShopController());
     Get.put(ProductSearchController());
+    Get.put(WishListController());
+    Get.put(CartPageController());
   }
 }

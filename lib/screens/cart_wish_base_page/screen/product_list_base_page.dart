@@ -9,12 +9,14 @@ class ProductListPage extends StatefulWidget {
   final List<Product> products;
   final Function(Product) onRemove;
   final Function(Product, int) onQuantityChanged;
+  final bool showTitle;
 
   const ProductListPage({
     super.key,
     required this.title,
     required this.products,
     required this.onRemove,
+    required this.showTitle,
     required this.onQuantityChanged,
   });
 
@@ -46,10 +48,12 @@ class _ProductListPageState extends State<ProductListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        backgroundColor: const Color(0xFF464F54),
-      ),
+      appBar: widget.showTitle // Conditionally show AppBar
+          ? AppBar(
+              title: Text(widget.title),
+              backgroundColor: const Color(0xFF464F54),
+            )
+          : null,
       body: Column(
         children: [
           Container(

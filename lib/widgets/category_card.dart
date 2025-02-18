@@ -8,11 +8,11 @@ class CategoryCard extends StatelessWidget {
   final bool isMainShop;
 
   const CategoryCard({
-    Key? key,
+    super.key,
     required this.item,
     required this.onTap,
     this.isMainShop = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

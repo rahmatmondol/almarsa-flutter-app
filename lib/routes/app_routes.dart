@@ -14,6 +14,7 @@ abstract class Routes {
   static const productList = _Paths.productList;
   static const editMyAccountPage = _Paths.editMyAccountPage;
   static const searchPage = _Paths.searchPage;
+  static const wishListPage = _Paths.wishListPage;
 }
 
 abstract class _Paths {
@@ -32,5 +33,5 @@ abstract class _Paths {
   static const productList = "/productList";
   static const editMyAccountPage = "/editMyAccountPage";
   static const searchPage = "/searchPage";
-
+  static const wishListPage = "/wishListPage";
 }
