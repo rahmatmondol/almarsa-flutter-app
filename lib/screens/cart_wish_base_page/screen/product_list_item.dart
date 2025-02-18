@@ -22,10 +22,13 @@ class ProductListItem extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            Container(
+            SizedBox(
               width: 80,
               height: 80,
-              color: Colors.grey,
+              child: Image.network(
+                product.imageUrl,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
