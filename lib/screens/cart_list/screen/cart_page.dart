@@ -23,16 +23,18 @@ class _CartPageState extends State<CartPage> {
     await Get.find<CartPageController>().fetchWishList();
   }
 
-  void _removeItem(Product product) {
-    // setState(() {
-    //   cartItems.remove(product);
-    // });
+  Future<void> _removeItem(Product product) async {
+    await Get.find<CartPageController>().removeItem(
+      product: product,
+    );
+    Get.find<CartPageController>().cartItems.remove(product);
+    setState(() {});
   }
 
   void _updateQuantity(Product product, int newQuantity) {
-    // setState(() {
-    //   product.quantity = newQuantity;
-    // });
+    setState(() {
+      product.quantity = newQuantity;
+    });
   }
 
   @override

@@ -66,4 +66,25 @@ class WishListController extends GetxController {
     pageLoad = false;
     update();
   }
+
+  Future<void> removeItem({
+    required Product product,
+  }) async {
+    Dio dio = Dio();
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    final String userInfoString =
+        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
+
+    final userInfo = jsonDecode(userInfoString);
+
+    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
+
+    try {
+      await dio.delete(Urls.removeFromWishList(id: product.id));
+    } on DioException catch (e) {
+      print(e.toString());
+    }
+  }
 }

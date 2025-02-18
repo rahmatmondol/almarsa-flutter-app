@@ -24,16 +24,17 @@ class _WishlistPageState extends State<WishlistPage> {
     await Get.find<WishListController>().fetchWishList();
   }
 
-  void _removeItem(Product product) {
-    // setState(() {
-    //   cartItems.remove(product);
-    // });
+  Future<void> _removeItem(Product product) async {
+    await Get.find<WishListController>().removeItem(
+      product: product,
+    );
+    Get.find<WishListController>().cartItems.remove(product);
+    setState(() {});
   }
 
   void _updateQuantity(Product product, int newQuantity) {
-    setState(() {
-      product.quantity = newQuantity;
-    });
+    product.quantity = newQuantity;
+    setState(() {});
   }
 
   @override
