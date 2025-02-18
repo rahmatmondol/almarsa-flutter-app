@@ -5,6 +5,7 @@ import 'package:almarsa/constants/app_keys.dart';
 import 'package:almarsa/constants/urls.dart';
 import 'package:almarsa/models/product_details_model.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -116,6 +117,8 @@ class ProductDetailController extends GetxController {
       'Wishlist Updated',
       isInWishlist.value ? 'Added to wishlist' : 'Removed from wishlist',
       snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: isInWishlist.value ? Colors.green : Colors.red,
+      colorText: Colors.white,
     );
   }
 
@@ -162,6 +165,8 @@ class ProductDetailController extends GetxController {
       'Added to Basket',
       '${product.value!.name} (Quantity: ${quantity.value}) added to basket',
       snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
     );
   }
 }
