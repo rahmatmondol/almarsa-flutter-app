@@ -52,6 +52,7 @@ class CartPageController extends GetxController {
                     response.data["product"]["items"][i]["price"]?.toString() ??
                         "0.0") ??
                 0.0,
+            imageUrl: response.data["product"]["items"][i]["image"].toString(),
           ),
         );
       }

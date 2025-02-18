@@ -56,6 +56,7 @@ class WishListController extends GetxController {
             name: response.data["product"]["items"][i]["name"].toString(),
             description: "",
             price: response.data["product"]["items"][i]["price"],
+            imageUrl: response.data["product"]["items"][i]["image"],
           ),
         );
       }
