@@ -11,6 +11,7 @@ import 'package:almarsa/screens/home/screens/home_screen.dart';
 import 'package:almarsa/screens/main_shop/screen/main_shop_screen.dart';
 import 'package:almarsa/screens/product_details/screen/product_detail_screen.dart';
 import 'package:almarsa/screens/products_list/screen/product_list_screen.dart';
+import 'package:almarsa/screens/wish_list/screens/wishlist_page.dart';
 import 'package:get/get.dart';
 
 import '../screens/search/screen/search_screen.dart';
@@ -71,6 +72,10 @@ class AppPages {
     GetPage(
       name: Routes.searchPage,
       page: () => SearchScreen(),
+    ),
+    GetPage(
+      name: Routes.wishListPage,
+      page: () => WishlistPage(),
     ),
   ];
 }

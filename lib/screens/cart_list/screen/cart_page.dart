@@ -40,6 +40,7 @@ class _CartPageState extends State<CartPage> {
       products: cartItems,
       onRemove: _removeItem,
       onQuantityChanged: _updateQuantity,
+      showTitle: true,
     );
   }
 }

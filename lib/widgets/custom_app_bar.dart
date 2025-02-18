@@ -78,7 +78,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               CupertinoIcons.heart,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(
+                Routes.wishListPage,
+              );
+            },
           ),
         if (showNotification)
           IconButton(
