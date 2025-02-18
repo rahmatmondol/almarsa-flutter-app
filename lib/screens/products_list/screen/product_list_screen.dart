@@ -1,5 +1,6 @@
 // screens/product_list_screen.dart
 import 'package:almarsa/routes/app_routes.dart';
+import 'package:almarsa/screens/home/screens/drawer_menu_screen.dart';
 import 'package:almarsa/screens/products_list/controller/product_list_controller.dart';
 import 'package:almarsa/widgets/custom_app_bar.dart';
 import 'package:almarsa/widgets/products_card.dart';
@@ -28,7 +29,7 @@ class ProductListScreen extends StatelessWidget {
         logoText: 'ALMARSA',
         showMenu: true,
         scaffoldKey: _scaffoldKey,
-      ),
+      ),  drawer: DrawerMenu(),
       body: Obx(() {
         if (controller.isLoading.value && controller.products.isEmpty) {
           return const Center(child: CircularProgressIndicator());

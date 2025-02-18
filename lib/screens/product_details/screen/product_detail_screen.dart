@@ -1,5 +1,6 @@
 // screens/product_detail_screen.dart
 import 'package:almarsa/constants/app_colors.dart';
+import 'package:almarsa/screens/home/screens/drawer_menu_screen.dart';
 import 'package:almarsa/screens/product_details/controller/product_details_controller.dart';
 import 'package:almarsa/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:get/get.dart';
 class ProductDetailScreen extends StatelessWidget {
   final ProductDetailController controller;
   final PageController _pageController = PageController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   ProductDetailScreen({
     super.key,
@@ -22,10 +24,12 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        showBackArrow: true,
+      key: _scaffoldKey,
+      appBar: CustomAppBar(
         logoText: 'ALMARSA',
-      ),
+        showMenu: true,
+        scaffoldKey: _scaffoldKey,
+      ),  drawer: DrawerMenu(),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());

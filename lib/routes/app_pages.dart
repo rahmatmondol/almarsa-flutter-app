@@ -9,11 +9,11 @@ import 'package:almarsa/screens/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:almarsa/screens/contact/screen/contact_page.dart';
 import 'package:almarsa/screens/home/screens/home_screen.dart';
 import 'package:almarsa/screens/main_shop/screen/main_shop_screen.dart';
-import 'package:almarsa/screens/new_this_week/screen/new_this_week_screen.dart';
 import 'package:almarsa/screens/product_details/screen/product_detail_screen.dart';
 import 'package:almarsa/screens/products_list/screen/product_list_screen.dart';
 import 'package:get/get.dart';
 
+import '../screens/search/screen/search_screen.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -49,10 +49,6 @@ class AppPages {
       page: () => HomeScreen(),
     ),
     GetPage(
-      name: Routes.newThisWeek,
-      page: () => NewThisWeekScreen(),
-    ),
-    GetPage(
       name: Routes.bottomNavBarScreen,
       page: () => MainScreen(),
     ),
@@ -71,6 +67,10 @@ class AppPages {
     GetPage(
       name: Routes.mainShop,
       page: () => MainShopScreen(),
+    ),
+    GetPage(
+      name: Routes.searchPage,
+      page: () => SearchScreen(),
     ),
   ];
 }

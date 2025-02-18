@@ -7,9 +7,10 @@ import 'package:almarsa/controllers/splash_controller.dart';
 import 'package:almarsa/screens/home/controller/drawer_controller.dart';
 import 'package:almarsa/screens/home/controller/home_controller.dart';
 import 'package:almarsa/screens/main_shop/controller/main_shop_controller.dart';
-import 'package:almarsa/screens/new_this_week/controller/new_this_week_controller.dart';
 import 'package:almarsa/screens/products_list/controller/product_list_controller.dart';
+import 'package:almarsa/screens/search/controller/search_controller.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'controllers/contact_page_controller.dart';
@@ -28,8 +29,6 @@ class ControllerBinders extends Bindings {
     Get.put(ChangePasswordController());
     Get.put(HomeController());
     Get.put(MainShopController());
-    Get.put(NewThisWeekController());
-    // Get.put(ProductDetailController());
     Get.put(ContactPageController());
     Get.put(MyAccountController());
     Get.put(DrawerMenuController());
@@ -42,5 +41,6 @@ class ControllerBinders extends Bindings {
     );
     Get.put(EditMyAccountController());
     Get.put(MainShopController());
+    Get.put(ProductSearchController());
   }
 }
