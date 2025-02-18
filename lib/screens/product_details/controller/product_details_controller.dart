@@ -78,39 +78,8 @@ class ProductDetailController extends GetxController {
   Future<void> toggleWishlist({
     required String productId,
   }) async {
-    Dio dio = Dio();
 
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    final String userInfoString =
-        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
-
-    final userInfo = jsonDecode(userInfoString);
-
-    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
-
-    if (isInWishlist.isFalse) {
-      try {
-        await dio.post(
-          Urls.wishListUrl,
-          data: {
-            "product_id": productId.toString(),
-            "quantity": quantity.toString(),
-          },
-          options: Options(
-            followRedirects: true,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          ),
-        );
-      } on DioException catch (e) {
-        print(e.toString());
-        return;
-      }
-    } else {
-      //   TODO: delete from wishlist
-    }
 
     isInWishlist.toggle();
     Get.snackbar(

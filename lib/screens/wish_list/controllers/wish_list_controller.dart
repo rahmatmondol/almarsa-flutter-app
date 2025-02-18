@@ -11,14 +11,7 @@ import '../../cart_wish_base_page/model/products_list_model.dart';
 class WishListController extends GetxController {
   bool pageLoad = false;
 
-  List<Product> cartItems = [
-    // Product(
-    //   id: '1',
-    //   name: "testing",
-    //   description: 'Description of product',
-    //   price: 3.500,
-    // ),
-  ];
+  List<Product> cartItems = [];
 
   Future<void> fetchWishList() async {
     pageLoad = true;
@@ -86,6 +79,40 @@ class WishListController extends GetxController {
       await dio.delete(Urls.removeFromWishList(id: product.id));
     } on DioException catch (e) {
       print(e.toString());
+    }
+  }
+
+  Future<void> addToWishList({
+    required productId,
+  }) async {
+    Dio dio = Dio();
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    final String userInfoString =
+        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
+
+    final userInfo = jsonDecode(userInfoString);
+
+    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
+
+    try {
+      await dio.post(
+        Urls.wishListUrl,
+        data: {
+          "product_id": productId.toString(),
+          "quantity": 1,
+        },
+        options: Options(
+          followRedirects: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+    } on DioException catch (e) {
+      print(e.toString());
+      return;
     }
   }
 }
