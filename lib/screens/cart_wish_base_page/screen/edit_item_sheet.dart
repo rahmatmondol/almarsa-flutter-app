@@ -38,7 +38,7 @@ class _EditItemSheetState extends State<EditItemSheet> {
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: 100,
                 height: 100,
                 // color: Colors.grey,

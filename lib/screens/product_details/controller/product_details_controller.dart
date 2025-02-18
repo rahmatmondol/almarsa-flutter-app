@@ -1,9 +1,11 @@
 // controllers/product_details_controller.dart
 import 'dart:convert';
 
+import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/constants/app_keys.dart';
 import 'package:almarsa/constants/urls.dart';
 import 'package:almarsa/models/product_details_model.dart';
+import 'package:almarsa/routes/app_routes.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -78,48 +80,14 @@ class ProductDetailController extends GetxController {
   Future<void> toggleWishlist({
     required String productId,
   }) async {
-    Dio dio = Dio();
-
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
-    final String userInfoString =
-        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
-
-    final userInfo = jsonDecode(userInfoString);
-
-    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
-
-    if (isInWishlist.isFalse) {
-      try {
-        await dio.post(
-          Urls.wishListUrl,
-          data: {
-            "product_id": productId.toString(),
-            "quantity": quantity.toString(),
-          },
-          options: Options(
-            followRedirects: true,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          ),
-        );
-      } on DioException catch (e) {
-        print(e.toString());
-        return;
-      }
-    } else {
-      //   TODO: delete from wishlist
-    }
-
     isInWishlist.toggle();
-    Get.snackbar(
-      'Wishlist Updated',
-      isInWishlist.value ? 'Added to wishlist' : 'Removed from wishlist',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: isInWishlist.value ? Colors.green : Colors.red,
-      colorText: Colors.white,
-    );
+    // Get.snackbar(
+    //   'Wishlist Updated',
+    //   isInWishlist.value ? 'Added to wishlist' : 'Removed from wishlist',
+    //   snackPosition: SnackPosition.BOTTOM,
+    //   backgroundColor: isInWishlist.value ? Colors.green : Colors.red,
+    //   colorText: Colors.white,
+    // );
   }
 
   Future<void> addToBasket({
@@ -127,9 +95,14 @@ class ProductDetailController extends GetxController {
   }) async {
     if (product.value == null) return;
 
-    Dio dio = Dio();
-
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    if (sharedPreferences.getString(AppKeys.userInfoKey)?.isNotEmpty ?? false) {
+    } else {
+      Get.offAllNamed(Routes.login);
+    }
+
+    Dio dio = Dio();
 
     final String userInfoString =
         sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
@@ -138,34 +111,30 @@ class ProductDetailController extends GetxController {
 
     dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
 
-    if (isInWishlist.isFalse) {
-      try {
-        await dio.post(
-          Urls.addToBasketUrl,
-          data: {
-            "product_id": productId.toString(),
-            "quantity": quantity.toString(),
+    try {
+      await dio.post(
+        Urls.addToBasketUrl,
+        data: {
+          "product_id": productId.toString(),
+          "quantity": quantity.toString(),
+        },
+        options: Options(
+          followRedirects: true,
+          headers: {
+            'Content-Type': 'application/json',
           },
-          options: Options(
-            followRedirects: true,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          ),
-        );
-      } on DioException catch (e) {
-        print(e.toString());
-        return;
-      }
-    } else {
-      //   TODO: delete from basket
+        ),
+      );
+    } on DioException catch (e) {
+      print(e.toString());
+      return;
     }
 
     Get.snackbar(
       'Added to Basket',
       '${product.value!.name} (Quantity: ${quantity.value}) added to basket',
       snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.green,
+      backgroundColor: AppColors.primaryColor,
       colorText: Colors.white,
     );
   }

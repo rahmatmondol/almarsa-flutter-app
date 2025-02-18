@@ -115,9 +115,28 @@ class _MyAccountState extends State<MyAccount> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
+                            onTap: () {
+                              Get.toNamed(Routes.contactPage);
+                            },
+                            child: Card(
+                              color: AppColors.primaryColor,
+                              surfaceTintColor: Colors.white,
+                              child: _buildInfoListTile(
+                                title: "Contact Us",
+                                icon: Icon(
+                                  Icons.contact_mail,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
                             onTap: () async {
                               await controller.logOut();
-                              Get.offAllNamed(Routes.login);
+                              Get.offAllNamed(Routes.bottomNavBarScreen);
                             },
                             child: Card(
                               color: AppColors.primaryColor,

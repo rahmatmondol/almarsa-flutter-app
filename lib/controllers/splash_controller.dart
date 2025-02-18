@@ -14,14 +14,16 @@ class SplashController extends GetxController {
   void navigateToNextScreen() async {
     await Future.delayed(const Duration(seconds: 3));
 
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Get.offAllNamed(Routes.bottomNavBarScreen);
 
-    // print("sajid testing ${sharedPreferences.getString(AppKeys.userInfoKey)}");
-
-    if (sharedPreferences.getString(AppKeys.userInfoKey)?.isNotEmpty ?? false) {
-      Get.offAllNamed(Routes.bottomNavBarScreen);
-    } else {
-      Get.offAllNamed(Routes.login);
-    }
+    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    //
+    // // print("sajid testing ${sharedPreferences.getString(AppKeys.userInfoKey)}");
+    //
+    // if (sharedPreferences.getString(AppKeys.userInfoKey)?.isNotEmpty ?? false) {
+    //   Get.offAllNamed(Routes.bottomNavBarScreen);
+    // } else {
+    //   Get.offAllNamed(Routes.login);
+    // }
   }
 }
