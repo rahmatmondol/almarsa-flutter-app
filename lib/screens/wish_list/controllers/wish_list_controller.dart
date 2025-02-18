@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:almarsa/constants/app_keys.dart';
 import 'package:almarsa/constants/urls.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../constants/app_colors.dart';
 import '../../cart_wish_base_page/model/products_list_model.dart';
 
 class WishListController extends GetxController {
@@ -48,7 +50,9 @@ class WishListController extends GetxController {
             id: response.data["product"]["items"][i]["id"].toString(),
             name: response.data["product"]["items"][i]["name"].toString(),
             description: "",
-            price: response.data["product"]["items"][i]["price"],
+            price: double.tryParse(
+                    response.data["product"]["items"][i]["price"].toString()) ??
+                0.0,
             imageUrl: response.data["product"]["items"][i]["image"],
           ),
         );
@@ -109,6 +113,14 @@ class WishListController extends GetxController {
             'Content-Type': 'application/json',
           },
         ),
+      );
+
+      Get.snackbar(
+        "Item added to wishlist",
+        '',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppColors.primaryColor,
+        colorText: Colors.white,
       );
     } on DioException catch (e) {
       print(e.toString());

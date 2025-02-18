@@ -1,6 +1,7 @@
 // controllers/product_details_controller.dart
 import 'dart:convert';
 
+import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/constants/app_keys.dart';
 import 'package:almarsa/constants/urls.dart';
 import 'package:almarsa/models/product_details_model.dart';
@@ -78,17 +79,14 @@ class ProductDetailController extends GetxController {
   Future<void> toggleWishlist({
     required String productId,
   }) async {
-
-
-
     isInWishlist.toggle();
-    Get.snackbar(
-      'Wishlist Updated',
-      isInWishlist.value ? 'Added to wishlist' : 'Removed from wishlist',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: isInWishlist.value ? Colors.green : Colors.red,
-      colorText: Colors.white,
-    );
+    // Get.snackbar(
+    //   'Wishlist Updated',
+    //   isInWishlist.value ? 'Added to wishlist' : 'Removed from wishlist',
+    //   snackPosition: SnackPosition.BOTTOM,
+    //   backgroundColor: isInWishlist.value ? Colors.green : Colors.red,
+    //   colorText: Colors.white,
+    // );
   }
 
   Future<void> addToBasket({
@@ -107,34 +105,30 @@ class ProductDetailController extends GetxController {
 
     dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
 
-    if (isInWishlist.isFalse) {
-      try {
-        await dio.post(
-          Urls.addToBasketUrl,
-          data: {
-            "product_id": productId.toString(),
-            "quantity": quantity.toString(),
+    try {
+      await dio.post(
+        Urls.addToBasketUrl,
+        data: {
+          "product_id": productId.toString(),
+          "quantity": quantity.toString(),
+        },
+        options: Options(
+          followRedirects: true,
+          headers: {
+            'Content-Type': 'application/json',
           },
-          options: Options(
-            followRedirects: true,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          ),
-        );
-      } on DioException catch (e) {
-        print(e.toString());
-        return;
-      }
-    } else {
-      //   TODO: delete from basket
+        ),
+      );
+    } on DioException catch (e) {
+      print(e.toString());
+      return;
     }
 
     Get.snackbar(
       'Added to Basket',
       '${product.value!.name} (Quantity: ${quantity.value}) added to basket',
       snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.green,
+      backgroundColor: AppColors.primaryColor,
       colorText: Colors.white,
     );
   }
