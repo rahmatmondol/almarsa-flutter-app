@@ -7,6 +7,7 @@ import 'package:almarsa/screens/AuthScreens/sign_up_screen.dart';
 import 'package:almarsa/screens/AuthScreens/splash_screen.dart';
 import 'package:almarsa/screens/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:almarsa/screens/contact/screen/contact_page.dart';
+import 'package:almarsa/screens/edit_my_account/screens/edit_my_account_page.dart';
 import 'package:almarsa/screens/home/screens/home_screen.dart';
 import 'package:almarsa/screens/main_shop/screen/main_shop_screen.dart';
 import 'package:almarsa/screens/product_details/screen/product_detail_screen.dart';
@@ -76,6 +77,10 @@ class AppPages {
     GetPage(
       name: Routes.wishListPage,
       page: () => WishlistPage(),
+    ),
+    GetPage(
+      name: Routes.editMyAccountPage,
+      page: () => EditMyAccountPage(),
     ),
   ];
 }
