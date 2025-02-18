@@ -1,6 +1,7 @@
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/constants/custom_text.dart';
 import 'package:almarsa/models/category_model.dart';
+import 'package:almarsa/routes/app_routes.dart';
 import 'package:almarsa/screens/home/controller/drawer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,6 +37,67 @@ class DrawerMenu extends StatelessWidget {
     );
   }
 
+  // Widget _buildCategoryTile(CategoryModel category, int level) {
+  //   bool hasChildren = category.childrenRecursive.isNotEmpty;
+  //
+  //   return Column(
+  //     children: [
+  //       ListTile(
+  //         contentPadding:
+  //             EdgeInsets.only(left: 16.0 + (level * 16.0), right: 16.0),
+  //         title: Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             Expanded(
+  //               child: Text(
+  //                 category.name,
+  //                 style: TextStyle(
+  //                   color: AppColors.textWhite,
+  //                   fontSize: 16,
+  //                 ),
+  //               ),
+  //             ),
+  //             if (hasChildren)
+  //               Obx(
+  //                 () => AnimatedRotation(
+  //                   turns: controller.isExpanded(category.id) ? 0.25 : 0,
+  //                   duration: const Duration(milliseconds: 200),
+  //                   child: Icon(
+  //                     Icons.arrow_forward_ios,
+  //                     color: AppColors.textWhite,
+  //                     size: 20,
+  //                   ),
+  //                 ),
+  //               ),
+  //           ],
+  //         ),
+  //         onTap: () {
+  //           if (hasChildren) {
+  //             // controller.toggleExpansion(category.id);
+  //             controller.toggleExpansion(int.parse(category.id.toString()));
+  //           } else {
+  //             Get.back();
+  //             Get.toNamed('/category/${category.id}', arguments: category);
+  //           }
+  //         },
+  //       ),
+  //       if (hasChildren)
+  //         Obx(
+  //           () => AnimatedSize(
+  //             duration: const Duration(milliseconds: 200),
+  //             child: controller.isExpanded(category.id)
+  //                 ? Column(
+  //                     children: category.childrenRecursive
+  //                         .map((child) => _buildCategoryTile(child, level + 1))
+  //                         .toList(),
+  //                   )
+  //                 : const SizedBox.shrink(),
+  //           ),
+  //         ),
+  //     ],
+  //   );
+  // }
+
   Widget _buildCategoryTile(CategoryModel category, int level) {
     bool hasChildren = category.childrenRecursive.isNotEmpty;
 
@@ -43,7 +105,7 @@ class DrawerMenu extends StatelessWidget {
       children: [
         ListTile(
           contentPadding:
-              EdgeInsets.only(left: 16.0 + (level * 16.0), right: 16.0),
+          EdgeInsets.only(left: 16.0 + (level * 16.0), right: 16.0),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -58,7 +120,7 @@ class DrawerMenu extends StatelessWidget {
               ),
               if (hasChildren)
                 Obx(
-                  () => AnimatedRotation(
+                      () => AnimatedRotation(
                     turns: controller.isExpanded(category.id) ? 0.25 : 0,
                     duration: const Duration(milliseconds: 200),
                     child: Icon(
@@ -72,24 +134,27 @@ class DrawerMenu extends StatelessWidget {
           ),
           onTap: () {
             if (hasChildren) {
-              // controller.toggleExpansion(category.id);
               controller.toggleExpansion(int.parse(category.id.toString()));
             } else {
-              Get.back();
-              Get.toNamed('/category/${category.id}', arguments: category);
+              Get.back(); // Close the drawer
+              // Navigate to product list with category model as argument
+              Get.toNamed(
+                Routes.productList,
+                arguments: {'category': category},
+              );
             }
           },
         ),
         if (hasChildren)
           Obx(
-            () => AnimatedSize(
+                () => AnimatedSize(
               duration: const Duration(milliseconds: 200),
               child: controller.isExpanded(category.id)
                   ? Column(
-                      children: category.childrenRecursive
-                          .map((child) => _buildCategoryTile(child, level + 1))
-                          .toList(),
-                    )
+                children: category.childrenRecursive
+                    .map((child) => _buildCategoryTile(child, level + 1))
+                    .toList(),
+              )
                   : const SizedBox.shrink(),
             ),
           ),
