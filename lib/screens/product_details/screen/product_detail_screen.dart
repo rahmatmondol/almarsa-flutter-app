@@ -2,6 +2,7 @@
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/screens/home/screens/drawer_menu_screen.dart';
 import 'package:almarsa/screens/product_details/controller/product_details_controller.dart';
+import 'package:almarsa/screens/wish_list/controllers/wish_list_controller.dart';
 import 'package:almarsa/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -29,7 +30,8 @@ class ProductDetailScreen extends StatelessWidget {
         logoText: 'ALMARSA',
         showMenu: true,
         scaffoldKey: _scaffoldKey,
-      ),  drawer: DrawerMenu(),
+      ),
+      drawer: DrawerMenu(),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
@@ -312,9 +314,12 @@ class ProductDetailScreen extends StatelessWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () async {
-                            await controller.toggleWishlist(
+                            await Get.find<WishListController>().addToWishList(
                               productId: product.id,
                             );
+                            // await controller.toggleWishlist(
+                            //   productId: product.id,
+                            // );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey[700],

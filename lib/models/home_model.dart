@@ -44,7 +44,7 @@ class HomeItemModel {
   final String icon;
   final bool status;
   final int categoryId;
-  final int? homeId;
+  final String? homeId;
   final DateTime createdAt;
   final DateTime updatedAt;
   final CategoryModel category;
