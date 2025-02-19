@@ -116,6 +116,25 @@ class _MyAccountState extends State<MyAccount> {
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
                             onTap: () {
+                              Get.toNamed(Routes.changePassword);
+                            },
+                            child: Card(
+                              color: AppColors.primaryColor,
+                              surfaceTintColor: Colors.white,
+                              child: _buildInfoListTile(
+                                title: "Change password",
+                                icon: Icon(
+                                  Icons.password,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
                               Get.toNamed(Routes.contactPage);
                             },
                             child: Card(

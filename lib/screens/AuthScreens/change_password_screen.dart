@@ -1,6 +1,5 @@
 import 'package:almarsa/constants/custom_text.dart'; // Update according to your file structure
 import 'package:almarsa/controllers/change_password_controller.dart'; // Update according to your file structure
-import 'package:almarsa/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,6 +27,43 @@ class ChangePasswordScreen extends StatelessWidget {
                     style: CustomTextStyles.getLargeStyle(context),
                   ),
                   const SizedBox(height: 30),
+                  // New Password Field
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Current Password',
+                      style: CustomTextStyles.getMediumStyle(context),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Obx(
+                    () => TextFormField(
+                      controller: controller.currentPasswordController,
+                      obscureText: !controller.isCurrentPasswordVisible.value,
+                      decoration: InputDecoration(
+                        hintText: 'Enter your current password',
+                        border: const OutlineInputBorder(),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            controller.isCurrentPasswordVisible.value
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: controller.toggleCurrentPasswordVisibility,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your new password';
+                        }
+                        if (value.length < 6) {
+                          return 'Password must be at least 6 characters';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 20),
 
                   // New Password Field
                   Align(
@@ -108,22 +144,53 @@ class ChangePasswordScreen extends StatelessWidget {
                   // Change Password Button
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
-                      // onPressed: controller.changePassword,
-                      onPressed: () => Get.toNamed(Routes.home),
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: Text(
-                        'Change Password',
-                        style:
-                            CustomTextStyles.getMediumStyle(context).copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
+                    child: GetBuilder<ChangePasswordController>(
+                      builder: (changePassController) {
+                        return ElevatedButton(
+                          // onPressed: controller.changePassword,
+                          onPressed: () async {
+                            bool response =
+                                await changePassController.changePassword();
+                            if (response) {
+                              Get.snackbar(
+                                'Success',
+                                '',
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.green,
+                                colorText: Colors.white,
+                              );
+                            } else {
+                              Get.snackbar(
+                                'Something went wrong',
+                                '',
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white,
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: changePassController.buttonInProgress
+                              ? Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : Text(
+                                  'Change Password',
+                                  style:
+                                      CustomTextStyles.getMediumStyle(context)
+                                          .copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                        );
+                      },
                     ),
                   ),
                 ],

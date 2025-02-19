@@ -60,7 +60,7 @@ class OTPController extends GetxController {
         update();
 
         return true;
-      } on DioException catch (e) {
+      } on DioException {
         buttonInProgress = false;
         update();
         return false;

@@ -44,8 +44,14 @@ class Urls {
 
   static String resetPasswordUrl = "$_baseUrl/reset-password";
 
+
   static String sendReOrder = "$_baseUrl/auth/order-again";
 
   static String getReOrderDetails({required orderId}) =>
       "$_baseUrl/auth/order/$orderId";
+
+
+  static String changePasswordUrl = "$_baseUrl/auth/change-password";
+
+
 }
