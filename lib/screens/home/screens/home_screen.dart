@@ -1,4 +1,5 @@
 import 'package:almarsa/constants/custom_text.dart';
+import 'package:almarsa/constants/image_path.dart';
 import 'package:almarsa/screens/home/controller/home_controller.dart';
 import 'package:almarsa/widgets/category_card.dart';
 import 'package:almarsa/widgets/custom_app_bar.dart';
@@ -11,7 +12,6 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   final HomeController controller = Get.find<HomeController>();
-
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -35,98 +35,100 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               children: [
                 // Banner Section
-                Container(
+                SizedBox(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.25,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      // Background Image Layer
+                      if (controller.homeData?.image != null &&
+                          controller.homeData!.image.isNotEmpty)
+                        Image.network(
+                          controller.homeData!.image,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              ImagePath.bannerImage,
+                              fit: BoxFit.cover,
+                            );
+                          },
+                        )
+                      else
+                        Image.asset(
+                          ImagePath.bannerImage,
+                          fit: BoxFit.cover,
+                        ),
 
-                   
-
-                      image: NetworkImage(
-                        controller.homeData?.image ?? "",
+                      // Overlay Layer
+                      Container(
+                        color: Colors.black.withOpacity(0.3),
                       ),
 
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.3),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // App Icon
-                        Image.network(
+                      // Content Layer
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // App Icon with fallback
 
-                          
-
-                          controller.homeData?.icon ?? "",
-
-                          height: 50,
-                          color: Colors.redAccent,
-                          // Making icon white to match text
-                          errorBuilder: (context, error, stackTrace) {
-                            return const SizedBox(height: 50);
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        // Title
-                        Text(
-
-                          controller.homeData?.title.toUpperCase() ?? "",
-                          style: CustomTextStyles.getLargeStyle2(context),
-                        ),
-                        // Description
-                        Text(
-                          controller.homeData?.description.toUpperCase() ?? "",
-                          style: CustomTextStyles.getLargeStyle3(context),
-                        ),
-                      ],
-                    ),
+                          // Title
+                          Text(
+                            controller.homeData?.title.toUpperCase() ??
+                                "WELCOME",
+                            style: CustomTextStyles.getLargeStyle2(context),
+                          ),
+                          const SizedBox(height: 16),
+                          if (controller.homeData?.icon != null &&
+                              controller.homeData!.icon.isNotEmpty)
+                            Image.network(
+                              controller.homeData!.icon,
+                              height: 50,
+                              color: Colors.redAccent,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  ImagePath.defaultIconImage,
+                                  height: 50,
+                                  color: Colors.redAccent,
+                                );
+                              },
+                            )
+                          else
+                            Image.asset(
+                              ImagePath.defaultIconImage,
+                              height: 50,
+                              color: Colors.redAccent,
+                            ),
+                          const SizedBox(height: 16),
+                          // Description
+                          Text(
+                            controller.homeData?.description.toUpperCase() ??
+                                "EXPLORE OUR PRODUCTS",
+                            style: CustomTextStyles.getLargeStyle3(context),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
 
-                // Categories Grid
-                // GridView.builder(
-                //   padding: const EdgeInsets.all(16),
-                //   physics: const NeverScrollableScrollPhysics(),
-                //   shrinkWrap: true,
-                //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                //     crossAxisCount: 2,
-                //     childAspectRatio: 1,
-                //     crossAxisSpacing: 16,
-                //     mainAxisSpacing: 16,
-                //   ),
-                //   itemCount: controller.categories.length,
-                //   itemBuilder: (context, index) {
-                //     final item = controller.categories[index];
-                //     final isMainShop = item.title.toLowerCase() == 'main-shop';
-                //     return CategoryCard(
-                //       item: item,
-                //       isMainShop: isMainShop,
-                //       onTap: () => controller.navigateToProductList(item),
-                //     );
-                //   },
-                // ),
-                // In HomeScreen's GridView.builder:
-
                 GridView.builder(
-                  padding: const EdgeInsets.all(16),
+                  padding:
+                      EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
+                  // Responsive padding
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 1,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
+                    crossAxisSpacing: MediaQuery.of(context).size.width *
+                        0.03, // Responsive spacing
+                    mainAxisSpacing: MediaQuery.of(context).size.width *
+                        0.03, // Responsive spacing
                   ),
-                  itemCount: controller.categories.length,
+                  itemCount: controller.homeData?.items.length,
                   itemBuilder: (context, index) {
                     final item = controller.categories[index];
-                    // Check if the title contains 'main-shop' case insensitive
-                    final isMainShop =
+                    final isMainShop = item.id == -1 ||
                         item.title.toLowerCase().contains('main-shop');
                     return CategoryCard(
                       item: item,

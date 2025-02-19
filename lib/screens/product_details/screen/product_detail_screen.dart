@@ -259,29 +259,56 @@ class ProductDetailScreen extends StatelessWidget {
                     ],
 
                     // Quantity Selector
+                    // if (product.stock.inStock) ...[
+                    //   Row(
+                    //     children: [
+                    //       IconButton(
+                    //         icon: const Icon(Icons.remove),
+                    //         onPressed: controller.decrementQuantity,
+                    //       ),
+                    //       Container(
+                    //         padding: const EdgeInsets.symmetric(horizontal: 16),
+                    //         child: Obx(() => Text(
+                    //               controller.quantity.value.toString(),
+                    //               style: const TextStyle(fontSize: 40),
+                    //             )),
+                    //       ),
+                    //       IconButton(
+                    //         icon: const Icon(Icons.add),
+                    //         onPressed: controller.incrementQuantity,
+                    //       ),
+                    //     ],
+                    //   ),
+                    //   const SizedBox(height: 24),
+                    // ],
                     if (product.stock.inStock) ...[
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.remove),
-                            onPressed: controller.decrementQuantity,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Obx(() => Text(
-                                  controller.quantity.value.toString(),
-                                  style: const TextStyle(fontSize: 20),
-                                )),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.add),
-                            onPressed: controller.incrementQuantity,
-                          ),
-                        ],
+                      Center(
+                        // Added Center widget
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          // Center the Row contents
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.remove),
+                              onPressed: controller.decrementQuantity,
+                            ),
+                            Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Obx(() => Text(
+                                    controller.quantity.value.toString(),
+                                    style: const TextStyle(fontSize: 40),
+                                  )),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.add),
+                              onPressed: controller.incrementQuantity,
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 24),
                     ],
-
                     // Description
                     const Text(
                       'DESCRIPTION',
@@ -322,7 +349,7 @@ class ProductDetailScreen extends StatelessWidget {
                             // );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey[700],
+                            backgroundColor: AppColors.primaryColor,
                             padding: const EdgeInsets.symmetric(vertical: 16),
                           ),
                           child: Row(
@@ -335,6 +362,8 @@ class ProductDetailScreen extends StatelessWidget {
                                   controller.isInWishlist.value
                                       ? Icons.favorite
                                       : Icons.favorite_border,
+                                  color: Colors.white,
+                                  size: 20,
                                 ),
                               ),
                             ],
@@ -351,7 +380,7 @@ class ProductDetailScreen extends StatelessWidget {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).primaryColor,
+                            backgroundColor: AppColors.otherColor,
                             padding: const EdgeInsets.symmetric(vertical: 16),
                           ),
                           child: const Row(
@@ -359,7 +388,10 @@ class ProductDetailScreen extends StatelessWidget {
                             children: [
                               Text('ADD TO BASKET'),
                               SizedBox(width: 8),
-                              Icon(Icons.shopping_basket),
+                              Icon(
+                                Icons.shopping_cart,
+                                color: Colors.white,
+                              ),
                             ],
                           ),
                         ),

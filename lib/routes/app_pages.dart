@@ -10,8 +10,10 @@ import 'package:almarsa/screens/contact/screen/contact_page.dart';
 import 'package:almarsa/screens/edit_my_account/screens/edit_my_account_page.dart';
 import 'package:almarsa/screens/home/screens/home_screen.dart';
 import 'package:almarsa/screens/main_shop/screen/main_shop_screen.dart';
+import 'package:almarsa/screens/notification/screen/notification_screen.dart';
 import 'package:almarsa/screens/order/screens/get_all_order.dart';
 import 'package:almarsa/screens/order/screens/make_order_screen.dart';
+import 'package:almarsa/screens/order/screens/re_order_screen.dart';
 import 'package:almarsa/screens/product_details/screen/product_detail_screen.dart';
 import 'package:almarsa/screens/products_list/screen/product_list_screen.dart';
 import 'package:almarsa/screens/wish_list/screens/wishlist_page.dart';
@@ -87,9 +89,18 @@ class AppPages {
     GetPage(
       name: Routes.makeOrderScreen,
       page: () => MakeOrderScreen(),
-    ),GetPage(
+    ),
+    GetPage(
       name: Routes.getAllOrderScreen,
       page: () => GetAllOrdersScreen(),
+    ),
+    GetPage(
+      name: Routes.reorderScreen,
+      page: () => ReorderScreen(),
+    ),
+    GetPage(
+      name: Routes.notificationScreen,
+      page: () => NotificationScreen(),
     ),
   ];
 }

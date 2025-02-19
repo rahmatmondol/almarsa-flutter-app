@@ -2,7 +2,6 @@ import 'package:almarsa/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextStyles {
-
   static TextStyle checkout(BuildContext context) {
     return TextStyle(
       fontSize: MediaQuery.of(context).size.width * 0.04,
@@ -66,6 +65,16 @@ class CustomTextStyles {
   static TextStyle getLargeStyle2(BuildContext context) {
     return TextStyle(
       fontSize: MediaQuery.of(context).size.width * 0.07,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.15,
+      color: AppColors.textWhite,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  static TextStyle getLargeStyle4(BuildContext context) {
+    return TextStyle(
+      fontSize: MediaQuery.of(context).size.width * 0.06,
       fontWeight: FontWeight.w600,
       letterSpacing: 0.15,
       color: AppColors.textWhite,
@@ -138,8 +147,6 @@ class CustomTextStylesConstrained {
       overflow: TextOverflow.ellipsis,
     );
   }
-
-
 }
 
 // Usage example:

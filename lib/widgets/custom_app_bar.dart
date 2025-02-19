@@ -79,9 +79,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              Get.toNamed(
-                Routes.wishListPage,
-              );
+              Get.toNamed(Routes.wishListPage);
             },
           ),
         if (showNotification)
@@ -90,7 +88,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               CupertinoIcons.bell,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () => Get.toNamed(Routes.notificationScreen),
           ),
         if (showMenu)
           IconButton(

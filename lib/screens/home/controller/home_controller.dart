@@ -1,4 +1,4 @@
-// controllers/home_controller.dart
+// // controllers/home_controller.dart
 
 import 'package:almarsa/constants/urls.dart';
 import 'package:almarsa/models/category_model.dart';
@@ -29,7 +29,7 @@ class HomeController extends GetxController {
           id: -1,
           // Special ID for main shop
           title: 'Main Shop',
-          icon: 'assets/icons/main_shop.png',
+          icon: 'assets/images/shopping-cart.png',
           // Add a default icon
           status: true,
           categoryId: -1,

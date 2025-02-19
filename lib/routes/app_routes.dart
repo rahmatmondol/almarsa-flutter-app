@@ -17,6 +17,8 @@ abstract class Routes {
   static const wishListPage = _Paths.wishListPage;
   static const makeOrderScreen = _Paths.makeOrderScreen;
   static const getAllOrderScreen = _Paths.getAllOrderScreen;
+  static const reorderScreen = _Paths.reorderScreen;
+  static const notificationScreen = _Paths.notificationScreen;
 }
 
 abstract class _Paths {
@@ -38,4 +40,6 @@ abstract class _Paths {
   static const wishListPage = "/wishListPage";
   static const makeOrderScreen = "/makeOrderScreen";
   static const getAllOrderScreen = "/getAllOrderScreen";
+  static const reorderScreen = "/reorderScreen";
+  static const notificationScreen = "/notificationScreen";
 }

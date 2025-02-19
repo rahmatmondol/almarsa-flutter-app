@@ -68,14 +68,10 @@ class HomeItemModel {
       icon: json['icon'],
       status: json['status'],
       categoryId: json['category_id'],
-      homeId: json['home_id'],
+      homeId: json['home_id']?.toString(),
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
       category: CategoryModel.fromJson(json['category']),
     );
   }
 }
-
-// widgets/category_card.dart
-
-// screens/home/home_screen.dart

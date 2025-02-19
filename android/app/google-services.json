@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "464177351985",
+    "firebase_url": "https://almarsa-app-default-rtdb.firebaseio.com",
+    "project_id": "almarsa-app",
+    "storage_bucket": "almarsa-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:464177351985:android:df0e86d6c938a364027410",
+        "android_client_info": {
+          "package_name": "com.example.almarsa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzWE-gxBcLo0BIhxiMa1M1K0ztjz3jNW4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
