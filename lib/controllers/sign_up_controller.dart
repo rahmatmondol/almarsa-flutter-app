@@ -44,7 +44,7 @@ class SignUpController extends GetxController {
 
     final dio = Dio();
     try {
-      final response = await dio.post(
+      await dio.post(
         Urls.signUpUrl,
         data: {
           "name": fullNameController.text,
@@ -60,7 +60,7 @@ class SignUpController extends GetxController {
       signUpInProgress = false;
       update();
 
-      return response.data["success"] ?? false;
+      return true;
     } on DioException catch (e) {
       log("DioError: ${e.response?.data ?? e.message}");
     } catch (e) {
@@ -69,6 +69,7 @@ class SignUpController extends GetxController {
 
     signUpInProgress = false;
     update();
+
     return false;
   }
 

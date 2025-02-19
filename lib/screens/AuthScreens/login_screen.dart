@@ -114,7 +114,23 @@ class LoginScreen extends StatelessWidget {
                         onPressed: () async {
                           bool response = await loginController.login();
                           if (response) {
+                            Get.snackbar(
+                              'Login Success',
+                              '',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.green,
+                              colorText: Colors.white,
+                            );
+
                             Get.offAllNamed(Routes.bottomNavBarScreen);
+                          } else {
+                            Get.snackbar(
+                              'Login Failed',
+                              'try again',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white,
+                            );
                           }
                         },
                         // onPressed: () => Get.toNamed(Routes.home),
