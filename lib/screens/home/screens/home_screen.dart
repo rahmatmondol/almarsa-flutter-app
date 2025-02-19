@@ -40,9 +40,13 @@ class HomeScreen extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.25,
                   decoration: BoxDecoration(
                     image: DecorationImage(
+
+                   
+
                       image: NetworkImage(
                         controller.homeData?.image ?? "",
                       ),
+
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -55,7 +59,11 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         // App Icon
                         Image.network(
+
+                          
+
                           controller.homeData?.icon ?? "",
+
                           height: 50,
                           color: Colors.redAccent,
                           // Making icon white to match text
@@ -66,6 +74,7 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(height: 16),
                         // Title
                         Text(
+
                           controller.homeData?.title.toUpperCase() ?? "",
                           style: CustomTextStyles.getLargeStyle2(context),
                         ),

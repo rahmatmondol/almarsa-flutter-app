@@ -77,6 +77,7 @@ class ProductDetailController extends GetxController {
     }
   }
 
+
   Future<void> toggleWishlist({
     required String productId,
   }) async {
