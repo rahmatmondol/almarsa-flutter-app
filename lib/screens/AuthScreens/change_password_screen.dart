@@ -1,3 +1,4 @@
+import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/constants/custom_text.dart'; // Update according to your file structure
 import 'package:almarsa/controllers/change_password_controller.dart'; // Update according to your file structure
 import 'package:flutter/material.dart';
@@ -12,6 +13,14 @@ class ChangePasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
+        foregroundColor: Colors.white,
+        title: Text(
+          'Change Password',
+          style: CustomTextStyles.getLargeStyle4(context),
+        ),
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -156,7 +165,7 @@ class ChangePasswordScreen extends StatelessWidget {
                                 'Success',
                                 '',
                                 snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Colors.green,
+                                backgroundColor: AppColors.primaryColor,
                                 colorText: Colors.white,
                               );
                             } else {
@@ -164,8 +173,8 @@ class ChangePasswordScreen extends StatelessWidget {
                                 'Something went wrong',
                                 '',
                                 snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Colors.red,
-                                colorText: Colors.white,
+                                backgroundColor: AppColors.primaryColor,
+                                colorText: Colors.red,
                               );
                             }
                           },
