@@ -79,7 +79,7 @@ class _MyAccountState extends State<MyAccount> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
-                            onTap: () {},
+                            onTap:()=> Get.toNamed(Routes.getAllOrderScreen),
                             child: Card(
                               color: AppColors.primaryColor,
                               surfaceTintColor: Colors.white,

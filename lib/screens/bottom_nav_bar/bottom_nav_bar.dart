@@ -24,10 +24,6 @@ class _MainScreenState extends State<MainScreen> {
 
     const WishlistPage(),
     const MyAccount(),
-    // const HowItWorksContent(),
-    // const ContactContent(),
-    // const SettingsContent(),
-    // const MyAccountContent(),
   ];
 
   @override
