@@ -1,9 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../constants/urls.dart';
 
 class ForgotPasswordController extends GetxController {
   final emailController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
+  bool buttonInProgress = false;
 
   @override
   void onClose() {
@@ -11,9 +16,40 @@ class ForgotPasswordController extends GetxController {
     super.onClose();
   }
 
-  void submitEmail() {
+  Future<bool> submitEmail() async {
+    Dio dio = Dio();
+
+    buttonInProgress = true;
+    update();
+
     if (formKey.currentState!.validate()) {
-      print('Email: ${emailController.text}');
+      try {
+        await dio.post(
+          Urls.forgetPasswordUrl,
+          data: {
+            "email": emailController.text,
+          },
+          options: Options(
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          ),
+        );
+        buttonInProgress = false;
+        update();
+
+        return true;
+      } on DioException catch (e) {
+        buttonInProgress = false;
+        update();
+        print(e.toString());
+        return false;
+      }
     }
+
+    buttonInProgress = false;
+    update();
+
+    return false;
   }
 }

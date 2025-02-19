@@ -194,7 +194,23 @@ class SignUpScreen extends StatelessWidget {
                       onPressed: () async {
                         bool response = await controller.signUp();
                         if (response) {
-                          Get.back();
+                          // Get.back();
+
+                          Get.snackbar(
+                            'Sign Up Success',
+                            '',
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.green,
+                            colorText: Colors.white,
+                          );
+                        } else {
+                          Get.snackbar(
+                            'Sign Up Failed',
+                            'something went wrong',
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.red,
+                            colorText: Colors.white,
+                          );
                         }
                       },
                       style: ElevatedButton.styleFrom(
