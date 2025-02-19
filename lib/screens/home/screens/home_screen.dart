@@ -8,10 +8,11 @@ import 'package:get/get.dart';
 import 'drawer_menu_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  final HomeController controller = Get.find<HomeController>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   HomeScreen({super.key});
+
+  final HomeController controller = Get.find<HomeController>();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {

@@ -29,7 +29,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                     style: CustomTextStyles.getLargeStyle(context),
                   ),
                   const SizedBox(height: 30),
-
                   // Email Field
                   Text(
                     'Email',
@@ -60,20 +59,46 @@ class ForgotPasswordScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       // onPressed: controller.submitEmail,
-                      onPressed: () => Get.toNamed(Routes.otpScreen),
+                      onPressed: () async {
+                        final bool response;
+
+                        if (controller.formKey.currentState!.validate()) {
+                          response = await controller.submitEmail();
+                          if (response) {
+                            Get.toNamed(Routes.otpScreen);
+                          } else {
+                            Get.snackbar(
+                              'Something went wrong',
+                              '',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white,
+                            );
+                          }
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: Text(
-                        'Next',
-                        style:
-                            CustomTextStyles.getMediumStyle(context).copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
+                      child: GetBuilder<ForgotPasswordController>(
+                          builder: (forgotPasswordController) {
+                        return forgotPasswordController.buttonInProgress
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Text(
+                                'Next',
+                                style: CustomTextStyles.getMediumStyle(context)
+                                    .copyWith(
+                                  color: Colors.white,
+                                ),
+                              );
+                      }),
                     ),
                   ),
                 ],

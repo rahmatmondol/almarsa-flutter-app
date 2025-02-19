@@ -30,11 +30,13 @@ class Urls {
   static String search() => "$_baseUrl/product-search";
 
   static String removeFromCart({required id}) => "$_baseUrl/auth/cart/$id";
-  
+
   static String removeFromWishList({required id}) =>
       "$_baseUrl/auth/wishlist/$id";
 
   static String getWishListUrl = "$_baseUrl/auth/wishlists";
 
   static String getCartListUrl = "$_baseUrl/auth/carts";
+
+  static String forgetPasswordUrl = "$_baseUrl/forget-password";
 }

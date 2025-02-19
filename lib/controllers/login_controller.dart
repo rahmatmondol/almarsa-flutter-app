@@ -42,7 +42,6 @@ class LoginController extends GetxController {
       Dio dio = Dio();
 
       try {
-
         final response = await dio.post(
           Urls.loginUrl,
           data: {
@@ -63,6 +62,8 @@ class LoginController extends GetxController {
           AppKeys.userInfoKey,
           jsonEncode(response.data),
         );
+
+
 
         loginProgress = false;
         update();
