@@ -44,4 +44,7 @@ class Urls {
 
   static String resetPasswordUrl = "$_baseUrl/reset-password";
 
+
+  static String changePasswordUrl = "$_baseUrl/auth/change-password";
+
 }
