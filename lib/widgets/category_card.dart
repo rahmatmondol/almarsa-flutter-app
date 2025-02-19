@@ -26,7 +26,7 @@ class CategoryCard extends StatelessWidget {
 
     // Calculate icon size based on container size
     // Using 50% of container size for icon
-    final iconSize = containerSize * 0.30;
+    final iconSize = containerSize * 0.4;
 
     final bool isMainShopItem = isMainShop ||
         item.id == -1 ||

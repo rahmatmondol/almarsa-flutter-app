@@ -70,6 +70,14 @@ class HomeScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           // App Icon with fallback
+
+                          // Title
+                          Text(
+                            controller.homeData?.title.toUpperCase() ??
+                                "WELCOME",
+                            style: CustomTextStyles.getLargeStyle2(context),
+                          ),
+                          const SizedBox(height: 16),
                           if (controller.homeData?.icon != null &&
                               controller.homeData!.icon.isNotEmpty)
                             Image.network(
@@ -91,14 +99,6 @@ class HomeScreen extends StatelessWidget {
                               color: Colors.redAccent,
                             ),
                           const SizedBox(height: 16),
-
-                          // Title
-                          Text(
-                            controller.homeData?.title.toUpperCase() ??
-                                "WELCOME",
-                            style: CustomTextStyles.getLargeStyle2(context),
-                          ),
-
                           // Description
                           Text(
                             controller.homeData?.description.toUpperCase() ??
