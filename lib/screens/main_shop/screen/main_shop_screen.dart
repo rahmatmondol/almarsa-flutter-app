@@ -1,5 +1,6 @@
 // screens/main_shop/main_shop_screen.dart
 import 'package:almarsa/constants/custom_text.dart';
+import 'package:almarsa/constants/image_path.dart';
 import 'package:almarsa/screens/home/screens/drawer_menu_screen.dart';
 import 'package:almarsa/screens/main_shop/controller/main_shop_controller.dart';
 import 'package:almarsa/widgets/category_card.dart';
@@ -37,41 +38,77 @@ class MainShopScreen extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.25,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(controller.mainShopData!.image),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.3),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // App Icon
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      // Background Image Layer
+                      if (controller.mainShopData?.image != null &&
+                          controller.mainShopData!.image.isNotEmpty)
                         Image.network(
-                          controller.mainShopData!.icon,
-                          height: 50,
-                          color: Colors.redAccent,
+                          controller.mainShopData!.image,
+                          fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
-                            return const SizedBox(height: 50);
+                            return Image.asset(
+                              ImagePath.bannerImage,
+                              fit: BoxFit.cover,
+                            );
                           },
+                        )
+                      else
+                        Image.asset(
+                          ImagePath.bannerImage,
+                          fit: BoxFit.cover,
                         ),
-                        const SizedBox(height: 16),
-                        // Title
-                        Text(
-                          controller.mainShopData!.title.toUpperCase(),
-                          style: CustomTextStyles.getLargeStyle2(context),
-                        ),
-                        // Description
-                        Text(
-                          controller.mainShopData!.description.toUpperCase(),
-                          style: CustomTextStyles.getLargeStyle3(context),
-                        ),
-                      ],
-                    ),
+
+                      // Overlay Layer
+                      Container(
+                        color: Colors.black.withOpacity(0.3),
+                      ),
+
+                      // Content Layer
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // App Icon with fallback
+                          if (controller.mainShopData?.icon != null &&
+                              controller.mainShopData!.icon.isNotEmpty)
+                            Image.network(
+                              controller.mainShopData!.icon,
+                              height: 50,
+                              color: Colors.redAccent,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  ImagePath.defaultIconImage,
+                                  height: 50,
+                                  color: Colors.redAccent,
+                                );
+                              },
+                            )
+                          else
+                            Image.asset(
+                              ImagePath.defaultIconImage,
+                              height: 50,
+                              color: Colors.redAccent,
+                            ),
+                          const SizedBox(height: 16),
+
+                          // Title
+                          Text(
+                            controller.mainShopData?.title.toUpperCase() ??
+                                "MAIN SHOP",
+                            style: CustomTextStyles.getLargeStyle2(context),
+                          ),
+
+                          // Description
+                          Text(
+                            controller.mainShopData?.description
+                                    .toUpperCase() ??
+                                "EXPLORE OUR PRODUCTS",
+                            style: CustomTextStyles.getLargeStyle3(context),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
 
@@ -92,7 +129,6 @@ class MainShopScreen extends StatelessWidget {
                     return CategoryCard(
                       item: item,
                       isMainShop: false,
-                      // Always false since we're in main shop
                       onTap: () => controller.navigateToProductList(item),
                     );
                   },
