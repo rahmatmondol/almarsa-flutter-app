@@ -40,7 +40,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.otpScreen,
-      page: () => OTPScreen(),
+      page: () => OTPScreen(email: Get.arguments as String),
     ),
     GetPage(
       name: Routes.changePassword,

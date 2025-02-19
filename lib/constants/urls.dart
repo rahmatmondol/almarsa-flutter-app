@@ -39,4 +39,6 @@ class Urls {
   static String getCartListUrl = "$_baseUrl/auth/carts";
 
   static String forgetPasswordUrl = "$_baseUrl/forget-password";
+
+  static String resetPasswordUrl = "$_baseUrl/reset-password";
 }

@@ -65,7 +65,10 @@ class ForgotPasswordScreen extends StatelessWidget {
                         if (controller.formKey.currentState!.validate()) {
                           response = await controller.submitEmail();
                           if (response) {
-                            Get.toNamed(Routes.otpScreen);
+                            Get.toNamed(
+                              Routes.otpScreen,
+                              arguments: controller.emailController.text,
+                            );
                           } else {
                             Get.snackbar(
                               'Something went wrong',
@@ -84,21 +87,23 @@ class ForgotPasswordScreen extends StatelessWidget {
                         ),
                       ),
                       child: GetBuilder<ForgotPasswordController>(
-                          builder: (forgotPasswordController) {
-                        return forgotPasswordController.buttonInProgress
-                            ? Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              )
-                            : Text(
-                                'Next',
-                                style: CustomTextStyles.getMediumStyle(context)
-                                    .copyWith(
-                                  color: Colors.white,
-                                ),
-                              );
-                      }),
+                        builder: (forgotPasswordController) {
+                          return forgotPasswordController.buttonInProgress
+                              ? Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : Text(
+                                  'Next',
+                                  style:
+                                      CustomTextStyles.getMediumStyle(context)
+                                          .copyWith(
+                                    color: Colors.white,
+                                  ),
+                                );
+                        },
+                      ),
                     ),
                   ),
                 ],
