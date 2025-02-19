@@ -1,4 +1,3 @@
-import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/screens/cart_wish_base_page/screen/product_list_base_page.dart';
 import 'package:almarsa/screens/home/screens/drawer_menu_screen.dart';
 import 'package:almarsa/screens/wish_list/controllers/wish_list_controller.dart';
@@ -46,10 +45,11 @@ class _WishlistPageState extends State<WishlistPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: CustomAppBar(
-        showBackArrow: false,
+        showBackArrow: true,
         logoText: 'WISH LIST',
         showMenu: true,
         scaffoldKey: _scaffoldKey,
+        showFavorite: false,
       ),
       drawer: DrawerMenu(),
       body: GetBuilder<WishListController>(builder: (controller) {
