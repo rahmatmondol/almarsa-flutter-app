@@ -51,6 +51,8 @@ class ProductListItem extends StatelessWidget {
                       ),
                     ],
                   ),
+                  Text(
+                      'Sub total : ${(product.quantity * product.price).toStringAsFixed(3)}'),
                 ],
               ),
             ),
