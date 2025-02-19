@@ -29,7 +29,7 @@ class HomeController extends GetxController {
           id: -1,
           // Special ID for main shop
           title: 'Main Shop',
-          icon: 'assets/icons/main_shop.png',
+          icon: 'assets/images/shopping-cart.png',
           // Add a default icon
           status: true,
           categoryId: -1,

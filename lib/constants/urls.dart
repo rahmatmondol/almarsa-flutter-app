@@ -35,13 +35,17 @@ class Urls {
   static String getWishListUrl = "$_baseUrl/auth/wishlists";
 
   static String getCartListUrl = "$_baseUrl/auth/carts";
-  
+
   static String makeOrder = "$_baseUrl/auth/order";
-  
+
   static String getAllOrder = "$_baseUrl/auth/orders";
 
   static String forgetPasswordUrl = "$_baseUrl/forget-password";
 
   static String resetPasswordUrl = "$_baseUrl/reset-password";
 
+  static String sendReOrder = "$_baseUrl/auth/order-again";
+
+  static String getReOrderDetails({required orderId}) =>
+      "$_baseUrl/auth/order/$orderId";
 }
