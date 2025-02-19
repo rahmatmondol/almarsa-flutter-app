@@ -12,7 +12,7 @@ class ProductListPage extends StatefulWidget {
   final Function(Product, int) onQuantityChanged;
   final bool showTitle;
   final bool showBackToShop; // New boolean flag
-  final bool showCheckout;   // New boolean flag
+  final bool showCheckout; // New boolean flag
 
   const ProductListPage({
     super.key,
@@ -22,7 +22,7 @@ class ProductListPage extends StatefulWidget {
     required this.showTitle,
     required this.onQuantityChanged,
     this.showBackToShop = true, // Default value
-    this.showCheckout = true,   // Default value
+    this.showCheckout = true, // Default value
   });
 
   @override
@@ -31,8 +31,10 @@ class ProductListPage extends StatefulWidget {
 
 class _ProductListPageState extends State<ProductListPage> {
   double get totalPrice {
-    return widget.products
-        .fold(0, (sum, item) => sum + (item.price * item.quantity));
+    return widget.products.fold(
+      0,
+      (sum, item) => sum + (item.price * item.quantity),
+    );
   }
 
   void _showEditModal(BuildContext context, Product product) {
@@ -55,16 +57,17 @@ class _ProductListPageState extends State<ProductListPage> {
     return Scaffold(
       appBar: widget.showTitle
           ? AppBar(
-        title: Text(widget.title),titleTextStyle: CustomTextStyles.getLargeStyle3(context),
-        backgroundColor: const Color(0xFF464F54),
-      )
+              title: Text(widget.title),
+              titleTextStyle: CustomTextStyles.getLargeStyle3(context),
+              backgroundColor: const Color(0xFF464F54),
+            )
           : null,
       body: Column(
         children: [
           Container(
             padding: const EdgeInsets.all(16),
             child: Text(
-              '${widget.products.length} Items: ( OMR total price )',
+              '${widget.products.length} Items: ( OMR total price ${totalPrice.toStringAsFixed(3)})',
               style: const TextStyle(fontSize: 16),
             ),
           ),
@@ -81,7 +84,8 @@ class _ProductListPageState extends State<ProductListPage> {
               },
             ),
           ),
-          if (widget.showBackToShop || widget.showCheckout) _buildBottomButtons(),
+          if (widget.showBackToShop || widget.showCheckout)
+            _buildBottomButtons(),
           const SizedBox(height: 20),
         ],
       ),
