@@ -19,8 +19,6 @@ class Urls {
 
   static String wishListUrl = "$_baseUrl/auth/wishlist";
 
-  // static String wishListRemoveUrl = "$_baseUrl/auth/wishlist/1";
-
   static String addToBasketUrl = "$_baseUrl/auth/cart";
 
   static String productsListUnderCategory(int id) => "$_baseUrl/category/$id";
@@ -37,4 +35,7 @@ class Urls {
   static String getWishListUrl = "$_baseUrl/auth/wishlists";
 
   static String getCartListUrl = "$_baseUrl/auth/carts";
+
+  static String makeOrder = "$_baseUrl/auth/order";
+  static String getAllOrder = "$_baseUrl/auth/orders";
 }

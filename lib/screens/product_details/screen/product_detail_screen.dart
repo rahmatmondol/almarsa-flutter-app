@@ -2,14 +2,15 @@
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/screens/home/screens/drawer_menu_screen.dart';
 import 'package:almarsa/screens/product_details/controller/product_details_controller.dart';
-import 'package:almarsa/screens/wish_list/controllers/wish_list_controller.dart';
 import 'package:almarsa/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 
-class ProductDetailScreen extends StatefulWidget {
+class ProductDetailScreen extends StatelessWidget {
   final ProductDetailController controller;
+  final PageController _pageController = PageController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   ProductDetailScreen({
     super.key,
@@ -21,17 +22,6 @@ class ProductDetailScreen extends StatefulWidget {
         );
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
-}
-
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  final PageController _pageController = PageController();
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final wishListController = Get.find<WishListController>();
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -39,22 +29,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         logoText: 'ALMARSA',
         showMenu: true,
         scaffoldKey: _scaffoldKey,
-      ),
-      drawer: DrawerMenu(),
+      ),  drawer: DrawerMenu(),
       body: Obx(() {
-        if (widget.controller.isLoading.value) {
+        if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        if (widget.controller.error.value.isNotEmpty) {
+        if (controller.error.value.isNotEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(widget.controller.error.value),
+                Text(controller.error.value),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: widget.controller.fetchProductDetails,
+                  onPressed: controller.fetchProductDetails,
                   child: const Text('Retry'),
                 ),
               ],
@@ -62,7 +51,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           );
         }
 
-        final product = widget.controller.product.value;
+        final product = controller.product.value;
         if (product == null) return const SizedBox();
 
         return SingleChildScrollView(
@@ -88,9 +77,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 mediaItem.image.url,
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) =>
-                                    const Center(
-                                  child: Icon(Icons.error),
-                                ),
+                                    const Center(child: Icon(Icons.error)),
                               ),
                             );
                           },
@@ -275,18 +262,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         children: [
                           IconButton(
                             icon: const Icon(Icons.remove),
-                            onPressed: widget.controller.decrementQuantity,
+                            onPressed: controller.decrementQuantity,
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Obx(() => Text(
-                                  widget.controller.quantity.value.toString(),
+                                  controller.quantity.value.toString(),
                                   style: const TextStyle(fontSize: 20),
                                 )),
                           ),
                           IconButton(
                             icon: const Icon(Icons.add),
-                            onPressed: widget.controller.incrementQuantity,
+                            onPressed: controller.incrementQuantity,
                           ),
                         ],
                       ),
@@ -325,12 +312,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () async {
-                            await wishListController.addToWishList(
+                            await controller.toggleWishlist(
                               productId: product.id,
                             );
-                            // await widget.controller.toggleWishlist(
-                            //   productId: product.id,
-                            // );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey[700],
@@ -343,7 +327,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               const SizedBox(width: 8),
                               Obx(
                                 () => Icon(
-                                  widget.controller.isInWishlist.value
+                                  controller.isInWishlist.value
                                       ? Icons.favorite
                                       : Icons.favorite_border,
                                 ),
@@ -357,7 +341,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () async {
-                            await widget.controller.addToBasket(
+                            await controller.addToBasket(
                               productId: product.id,
                             );
                           },

@@ -1,4 +1,5 @@
 // Shared Base Page (Cart/Wishlist)
+import 'package:almarsa/constants/custom_text.dart';
 import 'package:almarsa/screens/cart_wish_base_page/model/products_list_model.dart';
 import 'package:almarsa/screens/cart_wish_base_page/screen/edit_item_sheet.dart';
 import 'package:almarsa/screens/cart_wish_base_page/screen/product_list_item.dart';
@@ -10,6 +11,8 @@ class ProductListPage extends StatefulWidget {
   final Function(Product) onRemove;
   final Function(Product, int) onQuantityChanged;
   final bool showTitle;
+  final bool showBackToShop; // New boolean flag
+  final bool showCheckout;   // New boolean flag
 
   const ProductListPage({
     super.key,
@@ -18,6 +21,8 @@ class ProductListPage extends StatefulWidget {
     required this.onRemove,
     required this.showTitle,
     required this.onQuantityChanged,
+    this.showBackToShop = true, // Default value
+    this.showCheckout = true,   // Default value
   });
 
   @override
@@ -48,11 +53,11 @@ class _ProductListPageState extends State<ProductListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.showTitle // Conditionally show AppBar
+      appBar: widget.showTitle
           ? AppBar(
-              title: Text(widget.title),
-              backgroundColor: const Color(0xFF464F54),
-            )
+        title: Text(widget.title),titleTextStyle: CustomTextStyles.getLargeStyle3(context),
+        backgroundColor: const Color(0xFF464F54),
+      )
           : null,
       body: Column(
         children: [
@@ -76,8 +81,8 @@ class _ProductListPageState extends State<ProductListPage> {
               },
             ),
           ),
-          _buildBottomButtons(),
-          SizedBox(height: 20),
+          if (widget.showBackToShop || widget.showCheckout) _buildBottomButtons(),
+          const SizedBox(height: 20),
         ],
       ),
     );
@@ -88,31 +93,34 @@ class _ProductListPageState extends State<ProductListPage> {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF464F54),
-                padding: const EdgeInsets.symmetric(vertical: 16),
+          if (widget.showBackToShop) ...[
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF464F54),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                ),
+                onPressed: () => Navigator.pop(context),
+                child: const Text('BACK TO SHOP'),
               ),
-              onPressed: () => Navigator.pop(context),
-              child: const Text('BACK TO SHOP'),
             ),
-          ),
-          SizedBox(height: 10),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFE38B93),
-                padding: const EdgeInsets.symmetric(vertical: 16),
+            if (widget.showCheckout) const SizedBox(height: 10),
+          ],
+          if (widget.showCheckout)
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFE38B93),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                ),
+                onPressed: () {
+                  // Handle checkout
+                },
+                child: const Text('CHECKOUT'),
               ),
-              onPressed: () {
-                // Handle checkout
-              },
-              child: const Text('CHECKOUT'),
             ),
-          ),
         ],
       ),
     );

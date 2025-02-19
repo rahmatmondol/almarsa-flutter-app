@@ -1,6 +1,8 @@
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/screens/cart_wish_base_page/screen/product_list_base_page.dart';
+import 'package:almarsa/screens/home/screens/drawer_menu_screen.dart';
 import 'package:almarsa/screens/wish_list/controllers/wish_list_controller.dart';
+import 'package:almarsa/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +16,8 @@ class WishlistPage extends StatefulWidget {
 }
 
 class _WishlistPageState extends State<WishlistPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -40,11 +44,14 @@ class _WishlistPageState extends State<WishlistPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("YOUR WISHLIST"),
-        backgroundColor: AppColors.primaryColor,
-        foregroundColor: AppColors.textWhite,
+      key: _scaffoldKey,
+      appBar: CustomAppBar(
+        showBackArrow: false,
+        logoText: 'WISH LIST',
+        showMenu: true,
+        scaffoldKey: _scaffoldKey,
       ),
+      drawer: DrawerMenu(),
       body: GetBuilder<WishListController>(builder: (controller) {
         return ProductListPage(
           title: "",
