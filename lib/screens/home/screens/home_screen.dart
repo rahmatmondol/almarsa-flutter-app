@@ -8,10 +8,11 @@ import 'package:get/get.dart';
 import 'drawer_menu_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  final HomeController controller = Get.find<HomeController>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   HomeScreen({super.key});
+
+  final HomeController controller = Get.find<HomeController>();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,9 @@ class HomeScreen extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.25,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(controller.homeData!.image),
+                      image: NetworkImage(
+                        controller.homeData?.image ?? "",
+                      ),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -52,7 +55,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         // App Icon
                         Image.network(
-                          controller.homeData!.icon,
+                          controller.homeData?.icon ?? "",
                           height: 50,
                           color: Colors.redAccent,
                           // Making icon white to match text
@@ -63,12 +66,14 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(height: 16),
                         // Title
                         Text(
-                          controller.homeData!.title.toUpperCase(),
+                          controller.homeData?.title.toUpperCase() ?? "",
                           style: CustomTextStyles.getLargeStyle2(context),
                         ),
                         // Description
-                        Text(controller.homeData!.description.toUpperCase(),
-                            style: CustomTextStyles.getLargeStyle3(context)),
+                        Text(
+                          controller.homeData?.description.toUpperCase() ?? "",
+                          style: CustomTextStyles.getLargeStyle3(context),
+                        ),
                       ],
                     ),
                   ),
