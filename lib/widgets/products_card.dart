@@ -65,7 +65,7 @@ class ProductCard extends StatelessWidget {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.red,
+                          color: AppColors.otherColor,
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
@@ -123,7 +123,7 @@ class ProductCard extends StatelessWidget {
                         Text(
                           product.price.currency,
                           style: TextStyle(
-                            color: AppColors.red,
+                            color: AppColors.otherColor,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
@@ -132,7 +132,7 @@ class ProductCard extends StatelessWidget {
                         Text(
                           product.price.formatted.price,
                           style: const TextStyle(
-                            color: Colors.red,
+                            color: AppColors.otherColor,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
@@ -160,8 +160,9 @@ class ProductCard extends StatelessWidget {
                       product.stock.inStock ? 'In Stock' : 'Out of Stock',
                       style: TextStyle(
                         fontSize: 11,
-                        color:
-                            product.stock.inStock ? Colors.green : Colors.red,
+                        color: product.stock.inStock
+                            ? Colors.green
+                            : AppColors.otherColor,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

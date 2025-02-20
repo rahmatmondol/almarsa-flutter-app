@@ -32,7 +32,7 @@ class ChangePasswordScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Change Password',
+                    'Input Password',
                     style: CustomTextStyles.getLargeStyle(context),
                   ),
                   const SizedBox(height: 30),
@@ -181,7 +181,7 @@ class ChangePasswordScreen extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 15),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(0),
                             ),
                           ),
                           child: changePassController.buttonInProgress

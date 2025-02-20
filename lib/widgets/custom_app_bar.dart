@@ -40,7 +40,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             IconButton(
               padding: const EdgeInsets.only(left: 8),
               icon: const Icon(
-                CupertinoIcons.back,
+                Icons.arrow_back_ios,
                 color: Colors.white,
               ),
               onPressed: () => Get.back(),

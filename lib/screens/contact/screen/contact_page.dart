@@ -26,6 +26,7 @@ class _ContactPageState extends State<ContactPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(""),
+        foregroundColor: Colors.white,
         backgroundColor: AppColors.primaryColor,
       ),
       body: GetBuilder<ContactPageController>(

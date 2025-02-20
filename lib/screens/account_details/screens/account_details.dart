@@ -1,5 +1,7 @@
 import 'package:almarsa/constants/app_colors.dart';
+import 'package:almarsa/routes/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AccountDetails extends StatelessWidget {
   const AccountDetails({
@@ -49,6 +51,25 @@ class AccountDetails extends StatelessWidget {
               icon: Icons.email,
               subTitle: email ?? "",
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                onTap: () {
+                  Get.toNamed(Routes.editMyAccountPage);
+                },
+                child: Card(
+                  color: AppColors.primaryColor,
+                  surfaceTintColor: Colors.white,
+                  child: _buildAccountInfoListTile(
+                    title: "Edit My Account",
+                    icon: Icon(
+                      Icons.settings,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
 
           // children: [
@@ -70,7 +91,7 @@ class AccountDetails extends StatelessWidget {
   Widget _buildInfoCard({
     required String title,
     required IconData icon,
-    required String subTitle,
+    required String? subTitle,
   }) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -83,30 +104,88 @@ class AccountDetails extends StatelessWidget {
             icon,
             color: Colors.white,
           ),
-          subTitle: subTitle,
+          subTitle: subTitle ?? '',
         ),
       ),
     );
   }
 
-  ListTile _buildInfoListTile({
+  Card _buildInfoListTile({
     required String title,
     required Icon icon,
     required String subTitle,
   }) {
-    return ListTile(
-      leading: icon,
-      subtitle: Text(
-        subTitle,
-        style: TextStyle(
-          color: AppColors.textWhite,
+    return Card(
+      color: AppColors.primaryColor,
+      margin: EdgeInsets.zero,
+      // Remove card margin
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero, // Remove border radius
+      ),
+      elevation: 0,
+      // Remove shadow
+      child: ListTile(
+        leading: icon,
+        subtitle: Text(
+          subTitle,
+          style: TextStyle(
+            color: AppColors.textWhite,
+          ),
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: AppColors.textWhite,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
-      title: Text(
-        title,
-        style: TextStyle(
-          color: AppColors.textWhite,
-          fontWeight: FontWeight.bold,
+    );
+  }
+
+// ListTile _buildInfoListTile({
+//   required String title,
+//   required Icon icon,
+//   required String subTitle,
+// }) {
+//   return ListTile(
+//     leading: icon,
+//     subtitle: Text(
+//       subTitle,
+//       style: TextStyle(
+//         color: AppColors.textWhite,
+//       ),
+//     ),
+//     title: Text(
+//       title,
+//       style: TextStyle(
+//         color: AppColors.textWhite,
+//         fontWeight: FontWeight.bold,
+//       ),
+//     ),
+//   );
+// }
+
+  Card _buildAccountInfoListTile({
+    required String title,
+    required Icon icon,
+  }) {
+    return Card(
+      color: AppColors.primaryColor,
+      margin: EdgeInsets.zero,
+      // Remove card margin
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero, // Remove border radius
+      ),
+      elevation: 0,
+      // Remove shadow
+      child: ListTile(
+        leading: icon,
+        title: Text(
+          title,
+          style: TextStyle(
+            color: AppColors.textWhite,
+          ),
         ),
       ),
     );
