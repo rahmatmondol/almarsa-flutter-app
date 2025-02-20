@@ -60,6 +60,7 @@ class WishListController extends GetxController {
                     response.data["product"]["items"][i]["price"].toString()) ??
                 0.0,
             imageUrl: response.data["product"]["items"][i]["image"],
+            quantity: response.data["product"]["items"][i]["quantity"],
           ),
         );
       }
@@ -94,6 +95,7 @@ class WishListController extends GetxController {
 
   Future<void> addToWishList({
     required productId,
+    required int quantity,
   }) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -116,7 +118,7 @@ class WishListController extends GetxController {
         Urls.wishListUrl,
         data: {
           "product_id": productId.toString(),
-          "quantity": 1,
+          "quantity": quantity,
         },
         options: Options(
           followRedirects: true,
@@ -135,6 +137,64 @@ class WishListController extends GetxController {
       );
     } on DioException catch (e) {
       print(e.toString());
+      return;
+    }
+  }
+
+  Future<void> moveToBasket() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    if (sharedPreferences.getString(AppKeys.userInfoKey)?.isNotEmpty ?? false) {
+    } else {
+      Get.offAllNamed(Routes.login);
+    }
+
+    Dio dio = Dio();
+
+    final String userInfoString =
+        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
+
+    final userInfo = jsonDecode(userInfoString);
+
+    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
+
+    try {
+      final data = await dio.get(Urls.getWishListUrl);
+
+      for (int i = 0; i < data.data["product"]["items"].length; i++) {
+        await dio.post(
+          Urls.moveToBasketUrl,
+          data: {
+            "product_id": data.data["product"]["items"][i]["product_id"],
+          },
+          options: Options(
+            followRedirects: true,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          ),
+        );
+      }
+
+      cartItems = [];
+      update();
+
+      Get.snackbar(
+        "All items moved to basket",
+        '',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppColors.primaryColor,
+        colorText: Colors.white,
+      );
+    } on DioException catch (e) {
+      print(e.toString());
+      Get.snackbar(
+        e.toString(),
+        '',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppColors.primaryColor,
+        colorText: Colors.red,
+      );
       return;
     }
   }

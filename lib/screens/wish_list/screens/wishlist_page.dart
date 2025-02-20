@@ -56,6 +56,7 @@ class _WishlistPageState extends State<WishlistPage> {
         return ProductListPage(
           title: "",
           showTitle: false,
+          showBackToShop: false,
           products: controller.cartItems,
           onRemove: _removeItem,
           onQuantityChanged: _updateQuantity,

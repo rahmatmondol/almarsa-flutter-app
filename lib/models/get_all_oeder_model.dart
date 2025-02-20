@@ -84,7 +84,8 @@ class Data {
     subTotal = json['sub_total']?.toString();
     discount = json['discount']?.toString();
     grandTotal = json['grand_total']?.toString();
-    count = json['count'] is String ? int.tryParse(json['count']) : json['count'];
+    count =
+        json['count'] is String ? int.tryParse(json['count']) : json['count'];
     shippingMethod = json['shipping_method'];
     shippingCost = json['shipping_cost']?.toString();
     paymentMethod = json['payment_method'];
@@ -147,7 +148,7 @@ class Items {
   String? image;
   int? quantity;
   double? price;
-  double? discount;
+  dynamic discount;
   double? subTotal;
   int? orderId;
   String? createdAt;
