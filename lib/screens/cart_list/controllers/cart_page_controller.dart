@@ -91,4 +91,56 @@ class CartPageController extends GetxController {
       print(e.toString());
     }
   }
+
+  Future<void> updateCart({
+    required Product product,
+    required int quantity,
+  }) async {
+    Dio dio = Dio();
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    final String userInfoString =
+        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
+
+    final userInfo = jsonDecode(userInfoString);
+
+    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
+
+    try {
+      final response = await dio.get(
+        Urls.getCartListUrl,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+      String productId = "";
+
+      for (int i = 0; i < response.data["product"]["items"].length; i++) {
+        if (response.data["product"]["items"][i]["id"].toString() ==
+            product.id) {
+          productId = response.data["product"]["items"][i]["product_id"];
+          break;
+        }
+      }
+
+      await dio.post(
+        Urls.basketUpdateUrl,
+        data: {
+          "product_id": productId,
+          "quantity": quantity,
+        },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+    } on DioException catch (e) {
+      print(e.toString());
+    }
+  }
 }

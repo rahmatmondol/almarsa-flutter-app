@@ -54,4 +54,8 @@ class Urls {
   static String getNotification = "$_baseUrl/auth/change-password";
 
   static String moveToBasketUrl = "$_baseUrl/auth/wish-to-cart";
+
+  static String basketUpdateUrl = "$_baseUrl/auth/cart-update";
+
+  static String wishListUpdateUrl = "$_baseUrl/auth/wishlist-update";
 }
