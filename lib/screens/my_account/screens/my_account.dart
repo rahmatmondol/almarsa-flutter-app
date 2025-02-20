@@ -79,7 +79,7 @@ class _MyAccountState extends State<MyAccount> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
-                            onTap:()=> Get.toNamed(Routes.getAllOrderScreen),
+                            onTap: () => Get.toNamed(Routes.getAllOrderScreen),
                             child: Card(
                               color: AppColors.primaryColor,
                               surfaceTintColor: Colors.white,
@@ -93,25 +93,25 @@ class _MyAccountState extends State<MyAccount> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              Get.toNamed(Routes.editMyAccountPage);
-                            },
-                            child: Card(
-                              color: AppColors.primaryColor,
-                              surfaceTintColor: Colors.white,
-                              child: _buildInfoListTile(
-                                title: "Edit My Account",
-                                icon: Icon(
-                                  Icons.settings,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: InkWell(
+                        //     onTap: () {
+                        //       Get.toNamed(Routes.editMyAccountPage);
+                        //     },
+                        //     child: Card(
+                        //       color: AppColors.primaryColor,
+                        //       surfaceTintColor: Colors.white,
+                        //       child: _buildInfoListTile(
+                        //         title: "Edit My Account",
+                        //         icon: Icon(
+                        //           Icons.settings,
+                        //           color: Colors.white,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
@@ -179,16 +179,40 @@ class _MyAccountState extends State<MyAccount> {
     );
   }
 
-  ListTile _buildInfoListTile({
+  // ListTile _buildInfoListTile({
+  //   required String title,
+  //   required Icon icon,
+  // }) {
+  //   return ListTile(
+  //     leading: icon,
+  //     title: Text(
+  //       title,
+  //       style: TextStyle(
+  //         color: AppColors.textWhite,
+  //       ),
+  //     ),
+  //   );
+  // }
+  Card _buildInfoListTile({
     required String title,
     required Icon icon,
   }) {
-    return ListTile(
-      leading: icon,
-      title: Text(
-        title,
-        style: TextStyle(
-          color: AppColors.textWhite,
+    return Card(
+      color: AppColors.primaryColor,
+      margin: EdgeInsets.zero,
+      // Remove card margin
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero, // Remove border radius
+      ),
+      elevation: 0,
+      // Remove shadow
+      child: ListTile(
+        leading: icon,
+        title: Text(
+          title,
+          style: TextStyle(
+            color: AppColors.textWhite,
+          ),
         ),
       ),
     );

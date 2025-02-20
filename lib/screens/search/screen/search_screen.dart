@@ -1,22 +1,23 @@
+import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/routes/app_routes.dart';
 import 'package:almarsa/screens/search/controller/search_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:almarsa/constants/app_colors.dart';
-
 
 class SearchScreen extends StatelessWidget {
   SearchScreen({super.key});
 
-  final ProductSearchController controller = Get.find<ProductSearchController>();
+  final ProductSearchController controller =
+      Get.find<ProductSearchController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
+        foregroundColor: Colors.white,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () => Get.back(),
         ),
         title: TextField(
@@ -72,16 +73,15 @@ class SearchScreen extends StatelessWidget {
                 ),
                 trailing: product.stock.inStock
                     ? const Text(
-                  'In Stock',
-                  style: TextStyle(color: Colors.green),
-                )
+                        'In Stock',
+                        style: TextStyle(color: Colors.green),
+                      )
                     : const Text(
-                  'Out of Stock',
-                  style: TextStyle(color: Colors.red),
-                ),
+                        'Out of Stock',
+                        style: TextStyle(color: Colors.red),
+                      ),
                 onTap: () {
-                  Get.toNamed(Routes.productDetails,
-                      arguments: product.id);
+                  Get.toNamed(Routes.productDetails, arguments: product.id);
                 },
               ),
             );

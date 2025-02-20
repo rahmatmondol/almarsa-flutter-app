@@ -118,7 +118,7 @@ class LoginScreen extends StatelessWidget {
                               'Login Success',
                               '',
                               snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.green,
+                              backgroundColor: AppColors.primaryColor,
                               colorText: Colors.white,
                             );
 
@@ -128,8 +128,8 @@ class LoginScreen extends StatelessWidget {
                               'Login Failed',
                               'try again',
                               snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.red,
-                              colorText: Colors.white,
+                              backgroundColor: AppColors.primaryColor,
+                              colorText: Colors.red,
                             );
                           }
                         },
