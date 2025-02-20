@@ -346,6 +346,7 @@ class ProductDetailScreen extends StatelessWidget {
                               await Get.find<WishListController>()
                                   .addToWishList(
                                 productId: product.id,
+                                quantity: controller.quantity.value,
                               );
                               // await controller.toggleWishlist(
                               //   productId: product.id,

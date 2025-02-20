@@ -94,6 +94,7 @@ class WishListController extends GetxController {
 
   Future<void> addToWishList({
     required productId,
+    required int quantity,
   }) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -116,7 +117,7 @@ class WishListController extends GetxController {
         Urls.wishListUrl,
         data: {
           "product_id": productId.toString(),
-          "quantity": 1,
+          "quantity": quantity,
         },
         options: Options(
           followRedirects: true,
