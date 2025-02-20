@@ -147,7 +147,7 @@ class Items {
   String? image;
   int? quantity;
   double? price;
-  int? discount;
+  double? discount;
   double? subTotal;
   int? orderId;
   String? createdAt;
