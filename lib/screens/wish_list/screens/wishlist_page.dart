@@ -35,8 +35,14 @@ class _WishlistPageState extends State<WishlistPage> {
     setState(() {});
   }
 
-  void _updateQuantity(Product product, int newQuantity) {
+  Future<void> _updateQuantity(Product product, int newQuantity) async {
     product.quantity = newQuantity;
+
+    await Get.find<WishListController>().updateWishList(
+      product: product,
+      quantity: newQuantity,
+    );
+
     setState(() {});
   }
 
