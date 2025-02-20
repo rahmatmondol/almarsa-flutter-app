@@ -60,6 +60,7 @@ class WishListController extends GetxController {
                     response.data["product"]["items"][i]["price"].toString()) ??
                 0.0,
             imageUrl: response.data["product"]["items"][i]["image"],
+            quantity: response.data["product"]["items"][i]["quantity"],
           ),
         );
       }
