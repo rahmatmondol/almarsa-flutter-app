@@ -1,5 +1,7 @@
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/routes/app_routes.dart';
+import 'package:almarsa/screens/notification/controller/notification_controller.dart';
+import 'package:almarsa/screens/wish_list/controllers/wish_list_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -73,22 +75,94 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
       actions: [
         if (showFavorite)
-          IconButton(
-            icon: const Icon(
-              CupertinoIcons.heart,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Get.toNamed(Routes.wishListPage);
-            },
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(
+                  CupertinoIcons.heart,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Get.toNamed(Routes.wishListPage);
+                },
+              ),
+              GetX<WishListController>(
+                init: Get.put(WishListController()),
+                builder: (controller) {
+                  final count = controller.cartItems.length;
+                  if (count == 0) return const SizedBox();
+
+                  return Positioned(
+                    right: 4,
+                    top: 4,
+                    child: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      constraints: const BoxConstraints(
+                        minWidth: 20,
+                        minHeight: 20,
+                      ),
+                      child: Text(
+                        count.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         if (showNotification)
-          IconButton(
-            icon: const Icon(
-              CupertinoIcons.bell,
-              color: Colors.white,
-            ),
-            onPressed: () => Get.toNamed(Routes.notificationScreen),
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(
+                  CupertinoIcons.bell,
+                  color: Colors.white,
+                ),
+                onPressed: () => Get.toNamed(Routes.notificationScreen),
+              ),
+              GetX<NotificationController>(
+                init: Get.put(NotificationController()),
+                builder: (controller) {
+                  final count = controller.unreadCount;
+                  if (count == 0) return const SizedBox();
+
+                  return Positioned(
+                    right: 4,
+                    top: 4,
+                    child: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      constraints: const BoxConstraints(
+                        minWidth: 20,
+                        minHeight: 20,
+                      ),
+                      child: Text(
+                        count.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         if (showMenu)
           IconButton(

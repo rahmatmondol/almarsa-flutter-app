@@ -12,9 +12,18 @@ import '../../../constants/app_colors.dart';
 import '../../cart_wish_base_page/model/products_list_model.dart';
 
 class WishListController extends GetxController {
-  bool pageLoad = false;
+  final _pageLoad = false.obs;
+  final _cartItems = <Product>[].obs;
 
-  List<Product> cartItems = [];
+  bool get pageLoad => _pageLoad.value;
+
+  List<Product> get cartItems => _cartItems;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchWishList();
+  }
 
   Future<void> fetchWishList() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -22,20 +31,16 @@ class WishListController extends GetxController {
     if (sharedPreferences.getString(AppKeys.userInfoKey)?.isNotEmpty ?? false) {
     } else {
       Get.offAllNamed(Routes.login);
+      return;
     }
 
-    pageLoad = true;
-    update();
-
-    cartItems = [];
+    _pageLoad.value = true;
+    _cartItems.clear();
 
     Dio dio = Dio();
-
     final String userInfoString =
         sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
-
     final userInfo = jsonDecode(userInfoString);
-
     dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
 
     try {
@@ -48,74 +53,87 @@ class WishListController extends GetxController {
         ),
       );
 
-      // print("sajid testing ${response.data["product"]["items"]}");
-
-      for (int i = 0; i < response.data["product"]["items"].length; i++) {
-        cartItems.add(
-          Product(
-            id: response.data["product"]["items"][i]["id"].toString(),
-            name: response.data["product"]["items"][i]["name"].toString(),
-            description: "",
-            price: double.tryParse(
-                    response.data["product"]["items"][i]["price"].toString()) ??
-                0.0,
-            imageUrl: response.data["product"]["items"][i]["image"],
-          ),
-        );
+      if (response.data["product"] != null &&
+          response.data["product"]["items"] != null) {
+        for (var item in response.data["product"]["items"]) {
+          _cartItems.add(
+            Product(
+              id: item["id"].toString(),
+              name: item["name"].toString(),
+              description: "",
+              price: double.tryParse(item["price"].toString()) ?? 0.0,
+              imageUrl: item["image"],
+            ),
+          );
+        }
       }
     } on DioException catch (e) {
-      print(e.toString());
+      print('Error fetching wishlist: ${e.toString()}');
     }
 
-    pageLoad = false;
-    update();
+    _pageLoad.value = false;
   }
 
-  Future<void> removeItem({
-    required Product product,
-  }) async {
-    Dio dio = Dio();
-
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
-    final String userInfoString =
-        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
-
-    final userInfo = jsonDecode(userInfoString);
-
-    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
-
+  Future<void> removeItem({required Product product}) async {
     try {
+      // Note: UI is already updated by this point
+
+      Dio dio = Dio();
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      final String userInfoString =
+          sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
+      final userInfo = jsonDecode(userInfoString);
+
+      dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
       await dio.delete(Urls.removeFromWishList(id: product.id));
+
+      Get.snackbar(
+        "Success",
+        "Item removed from wishlist",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppColors.primaryColor,
+        colorText: Colors.white,
+      );
     } on DioException catch (e) {
-      print(e.toString());
+      print('Error removing item from wishlist: ${e.toString()}');
+
+      // If API call fails, add the item back to the list
+      if (!_cartItems.contains(product)) {
+        _cartItems.add(product);
+      }
+
+      Get.snackbar(
+        "Error",
+        "Failed to remove item from wishlist",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 
-  Future<void> addToWishList({
-    required productId,
-  }) async {
+  Future<void> addToWishList({required String productId}) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     if (sharedPreferences.getString(AppKeys.userInfoKey)?.isNotEmpty ?? false) {
     } else {
       Get.offAllNamed(Routes.login);
+      return;
     }
 
-    Dio dio = Dio();
-
-    final String userInfoString =
-        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
-
-    final userInfo = jsonDecode(userInfoString);
-
-    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
-
     try {
+      Dio dio = Dio();
+      final String userInfoString =
+          sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
+      final userInfo = jsonDecode(userInfoString);
+
+      dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
+
       await dio.post(
         Urls.wishListUrl,
         data: {
-          "product_id": productId.toString(),
+          "product_id": productId,
           "quantity": 1,
         },
         options: Options(
@@ -126,16 +144,24 @@ class WishListController extends GetxController {
         ),
       );
 
+      await fetchWishList(); // Refresh the list after adding
+
       Get.snackbar(
+        "Success",
         "Item added to wishlist",
-        '',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: AppColors.primaryColor,
         colorText: Colors.white,
       );
     } on DioException catch (e) {
-      print(e.toString());
-      return;
+      print('Error adding to wishlist: ${e.toString()}');
+      Get.snackbar(
+        "Error",
+        "Failed to add item to wishlist",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 }

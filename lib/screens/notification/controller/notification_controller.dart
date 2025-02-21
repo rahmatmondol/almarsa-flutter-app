@@ -23,6 +23,9 @@ class NotificationController extends GetxController {
     _getUserId();
   }
 
+  int get unreadCount =>
+      _notifications.where((notification) => !notification.readAt).length;
+
   Future<void> _getUserId() async {
     try {
       SharedPreferences sharedPreferences =
@@ -46,21 +49,23 @@ class NotificationController extends GetxController {
 
     _isLoading.value = true;
     try {
-      final snapshot =
-          await _database.child('notifications').child('user_$userId').get();
+      _database
+          .child('notifications')
+          .child('user_$userId')
+          .onValue
+          .listen((event) {
+        if (event.snapshot.exists && event.snapshot.value != null) {
+          final data = event.snapshot.value as Map;
+          _notifications.value = data.entries.map((e) {
+            return NotificationModel.fromJson(
+                e.key as String, Map.from(e.value as Map));
+          }).toList();
 
-      if (snapshot.exists && snapshot.value != null) {
-        final data = snapshot.value as Map<dynamic, dynamic>;
-        _notifications.value = data.entries.map((e) {
-          return NotificationModel.fromJson(
-              e.key as String, Map<String, dynamic>.from(e.value as Map));
-        }).toList();
-
-        // Sort notifications by creation date (newest first)
-        _notifications.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      } else {
-        _notifications.clear();
-      }
+          _notifications.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+        } else {
+          _notifications.clear();
+        }
+      });
     } catch (e) {
       print('Error fetching notifications: $e');
       _notifications.clear();
