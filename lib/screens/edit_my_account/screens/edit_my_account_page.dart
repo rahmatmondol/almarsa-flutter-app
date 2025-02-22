@@ -21,6 +21,7 @@ class _EditMyAccountPageState extends State<EditMyAccountPage> {
   final TextEditingController _countryTEC = TextEditingController();
   final TextEditingController _postalCodeTEC = TextEditingController();
   final TextEditingController _phoneTEC = TextEditingController();
+  final TextEditingController _stateTEC = TextEditingController();
 
   @override
   void dispose() {
@@ -34,6 +35,7 @@ class _EditMyAccountPageState extends State<EditMyAccountPage> {
     _countryTEC.dispose();
     _postalCodeTEC.dispose();
     _phoneTEC.dispose();
+    _stateTEC.dispose();
   }
 
   @override
@@ -154,6 +156,18 @@ class _EditMyAccountPageState extends State<EditMyAccountPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text("State"),
+                      const SizedBox(height: 5),
+                      TextFormField(
+                        controller: _stateTEC,
+                        keyboardType: TextInputType.text,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text("Country"),
                       const SizedBox(height: 5),
                       TextFormField(
@@ -237,6 +251,7 @@ class _EditMyAccountPageState extends State<EditMyAccountPage> {
                                     country: _countryTEC.text,
                                     postalCode: _postalCodeTEC.text,
                                     phone: _phoneTEC.text,
+                                    state: _stateTEC.text,
                                   );
                                 }
                               },
