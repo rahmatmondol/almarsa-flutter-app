@@ -20,6 +20,7 @@ class EditMyAccountController extends GetxController {
     required String country,
     required String postalCode,
     required String phone,
+    required String state,
   }) async {
     updateInProgress = true;
     update();
@@ -52,6 +53,7 @@ class EditMyAccountController extends GetxController {
           "country": country,
           "postal_code": postalCode,
           "phone": phone,
+          "state": state,
         },
       );
 
