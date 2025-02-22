@@ -16,25 +16,34 @@ class WishlistPage extends StatefulWidget {
 
 class _WishlistPageState extends State<WishlistPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final WishListController controller = Get.find<WishListController>();
 
   @override
   void initState() {
     super.initState();
-    controller.fetchWishList();
+    initialPageSetup();
+  }
+
+  Future<void> initialPageSetup() async {
+    await Get.find<WishListController>().fetchWishList();
   }
 
   Future<void> _removeItem(Product product) async {
-    // Remove from UI first for instant feedback
-    controller.cartItems.remove(product);
-
-    // Then make the API call
-    await controller.removeItem(product: product);
+    await Get.find<WishListController>().removeItem(
+      product: product,
+    );
+    Get.find<WishListController>().cartItems.remove(product);
+    setState(() {});
   }
 
-  void _updateQuantity(Product product, int newQuantity) {
+  Future<void> _updateQuantity(Product product, int newQuantity) async {
     product.quantity = newQuantity;
-    controller.refresh();
+
+    await Get.find<WishListController>().updateWishList(
+      product: product,
+      quantity: newQuantity,
+    );
+
+    setState(() {});
   }
 
   @override
@@ -49,16 +58,12 @@ class _WishlistPageState extends State<WishlistPage> {
         showFavorite: false,
       ),
       drawer: DrawerMenu(),
-      body: Obx(() {
-        if (controller.pageLoad) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
+      body: GetBuilder<WishListController>(builder: (controller) {
         return ProductListPage(
           title: "",
           showTitle: false,
-          products: controller.cartItems.toList(),
-          // Create a new list instance
+          showBackToShop: false,
+          products: controller.cartItems,
           onRemove: _removeItem,
           onQuantityChanged: _updateQuantity,
         );

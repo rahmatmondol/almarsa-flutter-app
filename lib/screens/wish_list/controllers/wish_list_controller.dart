@@ -12,18 +12,9 @@ import '../../../constants/app_colors.dart';
 import '../../cart_wish_base_page/model/products_list_model.dart';
 
 class WishListController extends GetxController {
-  final _pageLoad = false.obs;
-  final _cartItems = <Product>[].obs;
+  bool pageLoad = false;
 
-  bool get pageLoad => _pageLoad.value;
-
-  List<Product> get cartItems => _cartItems;
-
-  @override
-  void onInit() {
-    super.onInit();
-    fetchWishList();
-  }
+  List<Product> cartItems = [];
 
   Future<void> fetchWishList() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -31,16 +22,20 @@ class WishListController extends GetxController {
     if (sharedPreferences.getString(AppKeys.userInfoKey)?.isNotEmpty ?? false) {
     } else {
       Get.offAllNamed(Routes.login);
-      return;
     }
 
-    _pageLoad.value = true;
-    _cartItems.clear();
+    pageLoad = true;
+    update();
+
+    cartItems = [];
 
     Dio dio = Dio();
+
     final String userInfoString =
         sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
+
     final userInfo = jsonDecode(userInfoString);
+
     dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
 
     try {
@@ -53,88 +48,77 @@ class WishListController extends GetxController {
         ),
       );
 
-      if (response.data["product"] != null &&
-          response.data["product"]["items"] != null) {
-        for (var item in response.data["product"]["items"]) {
-          _cartItems.add(
-            Product(
-              id: item["id"].toString(),
-              name: item["name"].toString(),
-              description: "",
-              price: double.tryParse(item["price"].toString()) ?? 0.0,
-              imageUrl: item["image"],
-            ),
-          );
-        }
+      // print("sajid testing ${response.data["product"]["items"]}");
+
+      for (int i = 0; i < response.data["product"]["items"].length; i++) {
+        cartItems.add(
+          Product(
+            id: response.data["product"]["items"][i]["id"].toString(),
+            name: response.data["product"]["items"][i]["name"].toString(),
+            description: "",
+            price: double.tryParse(
+                    response.data["product"]["items"][i]["price"].toString()) ??
+                0.0,
+            imageUrl: response.data["product"]["items"][i]["image"],
+            quantity: response.data["product"]["items"][i]["quantity"],
+          ),
+        );
       }
     } on DioException catch (e) {
-      print('Error fetching wishlist: ${e.toString()}');
+      print(e.toString());
     }
 
-    _pageLoad.value = false;
+    pageLoad = false;
+    update();
   }
 
-  Future<void> removeItem({required Product product}) async {
+  Future<void> removeItem({
+    required Product product,
+  }) async {
+    Dio dio = Dio();
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    final String userInfoString =
+        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
+
+    final userInfo = jsonDecode(userInfoString);
+
+    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
+
     try {
-      // Note: UI is already updated by this point
-
-      Dio dio = Dio();
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      final String userInfoString =
-          sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
-      final userInfo = jsonDecode(userInfoString);
-
-      dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
       await dio.delete(Urls.removeFromWishList(id: product.id));
-
-      Get.snackbar(
-        "Success",
-        "Item removed from wishlist",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: AppColors.primaryColor,
-        colorText: Colors.white,
-      );
     } on DioException catch (e) {
-      print('Error removing item from wishlist: ${e.toString()}');
-
-      // If API call fails, add the item back to the list
-      if (!_cartItems.contains(product)) {
-        _cartItems.add(product);
-      }
-
-      Get.snackbar(
-        "Error",
-        "Failed to remove item from wishlist",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      print(e.toString());
     }
   }
 
-  Future<void> addToWishList({required String productId}) async {
+  Future<void> addToWishList({
+    required productId,
+    required int quantity,
+  }) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     if (sharedPreferences.getString(AppKeys.userInfoKey)?.isNotEmpty ?? false) {
     } else {
       Get.offAllNamed(Routes.login);
-      return;
     }
 
+    Dio dio = Dio();
+
+    final String userInfoString =
+        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
+
+    final userInfo = jsonDecode(userInfoString);
+
+    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
+
     try {
-      Dio dio = Dio();
-      final String userInfoString =
-          sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
-      final userInfo = jsonDecode(userInfoString);
-
-      dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
-
       await dio.post(
         Urls.wishListUrl,
         data: {
-          "product_id": productId,
-          "quantity": 1,
+          "product_id": productId.toString(),
+          "quantity": quantity,
         },
         options: Options(
           followRedirects: true,
@@ -144,24 +128,126 @@ class WishListController extends GetxController {
         ),
       );
 
-      await fetchWishList(); // Refresh the list after adding
-
       Get.snackbar(
-        "Success",
         "Item added to wishlist",
+        '',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: AppColors.primaryColor,
         colorText: Colors.white,
       );
     } on DioException catch (e) {
-      print('Error adding to wishlist: ${e.toString()}');
+      print(e.toString());
+      return;
+    }
+  }
+
+  Future<void> moveToBasket() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    if (sharedPreferences.getString(AppKeys.userInfoKey)?.isNotEmpty ?? false) {
+    } else {
+      Get.offAllNamed(Routes.login);
+    }
+
+    Dio dio = Dio();
+
+    final String userInfoString =
+        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
+
+    final userInfo = jsonDecode(userInfoString);
+
+    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
+
+    try {
+      final data = await dio.get(Urls.getWishListUrl);
+
+      for (int i = 0; i < data.data["product"]["items"].length; i++) {
+        await dio.post(
+          Urls.moveToBasketUrl,
+          data: {
+            "product_id": data.data["product"]["items"][i]["product_id"],
+          },
+          options: Options(
+            followRedirects: true,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          ),
+        );
+      }
+
+      cartItems = [];
+      update();
+
       Get.snackbar(
-        "Error",
-        "Failed to add item to wishlist",
+        "All items moved to basket",
+        '',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
+        backgroundColor: AppColors.primaryColor,
         colorText: Colors.white,
       );
+    } on DioException catch (e) {
+      print(e.toString());
+      Get.snackbar(
+        e.toString(),
+        '',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppColors.primaryColor,
+        colorText: Colors.red,
+      );
+      return;
+    }
+  }
+
+  Future<void> updateWishList({
+    required Product product,
+    required int quantity,
+  }) async {
+    Dio dio = Dio();
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    final String userInfoString =
+        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
+
+    final userInfo = jsonDecode(userInfoString);
+
+    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
+
+    try {
+      final response = await dio.get(
+        Urls.getWishListUrl,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+      String productId = "";
+
+      for (int i = 0; i < response.data["product"]["items"].length; i++) {
+        if (response.data["product"]["items"][i]["id"].toString() ==
+            product.id) {
+          productId = response.data["product"]["items"][i]["product_id"];
+          break;
+        }
+      }
+
+      await dio.post(
+        Urls.wishListUpdateUrl,
+        data: {
+          "product_id": productId,
+          "quantity": quantity,
+        },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+    } on DioException catch (e) {
+      print(e.toString());
     }
   }
 }

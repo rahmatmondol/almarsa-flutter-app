@@ -1,5 +1,6 @@
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/screens/edit_my_account/controller/edit_my_account_controller.dart';
+import 'package:almarsa/screens/edit_my_account/models/my_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,6 +22,7 @@ class _EditMyAccountPageState extends State<EditMyAccountPage> {
   final TextEditingController _countryTEC = TextEditingController();
   final TextEditingController _postalCodeTEC = TextEditingController();
   final TextEditingController _phoneTEC = TextEditingController();
+  final TextEditingController _stateTEC = TextEditingController();
 
   @override
   void dispose() {
@@ -34,6 +36,27 @@ class _EditMyAccountPageState extends State<EditMyAccountPage> {
     _countryTEC.dispose();
     _postalCodeTEC.dispose();
     _phoneTEC.dispose();
+    _stateTEC.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    MyProfileModel myProfileModel =
+        Get.find<EditMyAccountController>().myProfileModel;
+
+    _firstNameTEC.text = myProfileModel.firstName ?? "";
+    _lastNameTEC.text = myProfileModel.lastName ?? "";
+    _addressTEC.text = myProfileModel.address ?? "";
+    _addressTwoTEC.text = myProfileModel.address2 ?? "";
+    _cityTEC.text = myProfileModel.city ?? "";
+    _countryTEC.text = myProfileModel.country ?? "";
+    _postalCodeTEC.text = myProfileModel.postalCode ?? "";
+    _phoneTEC.text = myProfileModel.phone ?? "";
+    _stateTEC.text = myProfileModel.state ?? "";
+
+
   }
 
   @override
@@ -154,6 +177,18 @@ class _EditMyAccountPageState extends State<EditMyAccountPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text("State"),
+                      const SizedBox(height: 5),
+                      TextFormField(
+                        controller: _stateTEC,
+                        keyboardType: TextInputType.text,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text("Country"),
                       const SizedBox(height: 5),
                       TextFormField(
@@ -237,6 +272,7 @@ class _EditMyAccountPageState extends State<EditMyAccountPage> {
                                     country: _countryTEC.text,
                                     postalCode: _postalCodeTEC.text,
                                     phone: _phoneTEC.text,
+                                    state: _stateTEC.text,
                                   );
                                 }
                               },

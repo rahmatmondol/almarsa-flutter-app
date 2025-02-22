@@ -3,7 +3,9 @@ import 'package:almarsa/constants/custom_text.dart';
 import 'package:almarsa/screens/cart_wish_base_page/model/products_list_model.dart';
 import 'package:almarsa/screens/cart_wish_base_page/screen/edit_item_sheet.dart';
 import 'package:almarsa/screens/cart_wish_base_page/screen/product_list_item.dart';
+import 'package:almarsa/screens/wish_list/controllers/wish_list_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProductListPage extends StatefulWidget {
   final String title;
@@ -119,10 +121,10 @@ class _ProductListPageState extends State<ProductListPage> {
                   backgroundColor: const Color(0xFFE38B93),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                onPressed: () {
-                  // Handle checkout
+                onPressed: () async {
+                  await Get.find<WishListController>().moveToBasket();
                 },
-                child: const Text('CHECKOUT'),
+                child: const Text('Move To Basket'),
               ),
             ),
         ],

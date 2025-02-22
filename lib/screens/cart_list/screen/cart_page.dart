@@ -6,7 +6,6 @@ import 'package:almarsa/screens/cart_list/controllers/cart_page_controller.dart'
 import 'package:almarsa/screens/cart_wish_base_page/model/products_list_model.dart';
 import 'package:almarsa/screens/cart_wish_base_page/screen/product_list_base_page.dart';
 import 'package:almarsa/screens/home/screens/drawer_menu_screen.dart';
-import 'package:almarsa/screens/order/screens/make_order_screen.dart';
 import 'package:almarsa/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,6 +19,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -38,12 +38,16 @@ class _CartPageState extends State<CartPage> {
     setState(() {});
   }
 
-  void _updateQuantity(Product product, int newQuantity) {
+  Future<void> _updateQuantity(Product product, int newQuantity) async {
+    await Get.find<CartPageController>().updateCart(
+      product: product,
+      quantity: newQuantity,
+    );
+
     setState(() {
       product.quantity = newQuantity;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +77,13 @@ class _CartPageState extends State<CartPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: ElevatedButton(
-                      onPressed: () => _proceedToCheckout(controller.cartItems),
-                      child: Text('Proceed to Checkout',style: CustomTextStyles.checkout(context),),
+                      onPressed: () => _proceedToCheckout(
+                        controller.cartItems,
+                      ),
+                      child: Text(
+                        'Proceed to Checkout',
+                        style: CustomTextStyles.checkout(context),
+                      ),
                     ),
                   ),
                 ),

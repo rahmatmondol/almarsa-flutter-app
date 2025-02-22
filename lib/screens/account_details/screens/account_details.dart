@@ -1,5 +1,6 @@
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/routes/app_routes.dart';
+import 'package:almarsa/screens/edit_my_account/controller/edit_my_account_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -54,7 +55,9 @@ class AccountDetails extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
-                onTap: () {
+                onTap: () async {
+                  await Get.find<EditMyAccountController>().fetchProfileInfo();
+
                   Get.toNamed(Routes.editMyAccountPage);
                 },
                 child: Card(
