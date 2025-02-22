@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:almarsa/constants/app_keys.dart';
 import 'package:almarsa/constants/urls.dart';
 import 'package:almarsa/controllers/my_account_controller.dart';
+import 'package:almarsa/screens/edit_my_account/models/my_profile_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,33 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class EditMyAccountController extends GetxController {
   bool updateInProgress = false;
+
+  late MyProfileModel myProfileModel;
+
+  Future<void> fetchProfileInfo() async {
+    Dio dio = Dio();
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    final String userInfoString =
+        sharedPreferences.getString(AppKeys.userInfoKey) ?? "";
+
+    final userInfo = jsonDecode(userInfoString);
+
+    dio.options.headers['Authorization'] = 'Bearer ${userInfo["token"]}';
+
+    final profileInfo = await dio.get(
+      Urls.myProfileInfoUrl,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
+
+    myProfileModel = MyProfileModel.fromJson(profileInfo.data);
+    update();
+  }
 
   Future<void> updateProfile({
     required String firstName,

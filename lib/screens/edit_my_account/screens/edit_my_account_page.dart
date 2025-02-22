@@ -1,5 +1,6 @@
 import 'package:almarsa/constants/app_colors.dart';
 import 'package:almarsa/screens/edit_my_account/controller/edit_my_account_controller.dart';
+import 'package:almarsa/screens/edit_my_account/models/my_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,6 +37,26 @@ class _EditMyAccountPageState extends State<EditMyAccountPage> {
     _postalCodeTEC.dispose();
     _phoneTEC.dispose();
     _stateTEC.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    MyProfileModel myProfileModel =
+        Get.find<EditMyAccountController>().myProfileModel;
+
+    _firstNameTEC.text = myProfileModel.firstName ?? "";
+    _lastNameTEC.text = myProfileModel.lastName ?? "";
+    _addressTEC.text = myProfileModel.address ?? "";
+    _addressTwoTEC.text = myProfileModel.address2 ?? "";
+    _cityTEC.text = myProfileModel.city ?? "";
+    _countryTEC.text = myProfileModel.country ?? "";
+    _postalCodeTEC.text = myProfileModel.postalCode ?? "";
+    _phoneTEC.text = myProfileModel.phone ?? "";
+    _stateTEC.text = myProfileModel.state ?? "";
+
+
   }
 
   @override
