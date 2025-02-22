@@ -19,6 +19,7 @@ abstract class Routes {
   static const getAllOrderScreen = _Paths.getAllOrderScreen;
   static const reorderScreen = _Paths.reorderScreen;
   static const notificationScreen = _Paths.notificationScreen;
+  static const thankYouScreen = _Paths.thankYouScreen;
 }
 
 abstract class _Paths {
@@ -42,4 +43,5 @@ abstract class _Paths {
   static const getAllOrderScreen = "/getAllOrderScreen";
   static const reorderScreen = "/reorderScreen";
   static const notificationScreen = "/notificationScreen";
+  static const thankYouScreen = "/thankYouScreen";
 }

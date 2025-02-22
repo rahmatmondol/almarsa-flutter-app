@@ -62,67 +62,29 @@ class ProductDetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Product Images Carousel
                 Stack(
                   children: [
-                    Stack(
-                      children: [
-                        SizedBox(
-                          height: 300,
-                          child: PageView.builder(
-                            controller: _pageController,
-                            itemCount: product.media.items.length,
-                            itemBuilder: (context, index) {
-                              final mediaItem = product.media.items[index];
-                              return Container(
-                                width: double.infinity,
-                                color: Colors.grey[200],
-                                child: Image.network(
-                                  mediaItem.image.url,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      const Center(child: Icon(Icons.error)),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        if (product.ribbon != null)
-                          Positioned(
-                            top: 16,
-                            left: 16,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 6,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.otherColor,
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Text(
-                                product.ribbon!,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                    SizedBox(
+                      height: 300,
+                      child: PageView.builder(
+                        controller: _pageController,
+                        itemCount: product.media.items.length,
+                        itemBuilder: (context, index) {
+                          final mediaItem = product.media.items[index];
+                          return Container(
+                            width: double.infinity,
+                            color: Colors.grey[200],
+                            child: Image.network(
+                              mediaItem.image.url,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Center(child: Icon(Icons.error)),
                             ),
-                          ),
-                        Positioned(
-                          top: 16,
-                          right: 16,
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.close,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => Get.back(),
-                          ),
-                        ),
-                      ],
+                          );
+                        },
+                      ),
                     ),
-                    if (product.ribbon != null)
+                    if (product.ribbon?.isNotEmpty ?? false)
                       Positioned(
                         top: 16,
                         left: 16,
@@ -135,11 +97,15 @@ class ProductDetailScreen extends StatelessWidget {
                             color: AppColors.otherColor,
                             borderRadius: BorderRadius.circular(4),
                           ),
-                          child: Text(
-                            product.ribbon!,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                          child: IntrinsicWidth(
+                            child: Text(
+                              product.ribbon!,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),
@@ -157,7 +123,6 @@ class ProductDetailScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -186,7 +151,7 @@ class ProductDetailScreen extends StatelessWidget {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            product.price.formatted.price,
+                            product.price.formatted.discountedPrice,
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 20,
@@ -197,7 +162,7 @@ class ProductDetailScreen extends StatelessWidget {
                               product.price.discountedPrice) ...[
                             const SizedBox(width: 8),
                             Text(
-                              'was ${product.price.formatted.discountedPrice}',
+                              'was ${product.price.formatted.price}',
                               style: TextStyle(
                                 color: Colors.grey[600],
                                 decoration: TextDecoration.lineThrough,
@@ -260,29 +225,6 @@ class ProductDetailScreen extends StatelessWidget {
                         ],
                       ],
 
-                      // Quantity Selector
-                      // if (product.stock.inStock) ...[
-                      //   Row(
-                      //     children: [
-                      //       IconButton(
-                      //         icon: const Icon(Icons.remove),
-                      //         onPressed: controller.decrementQuantity,
-                      //       ),
-                      //       Container(
-                      //         padding: const EdgeInsets.symmetric(horizontal: 16),
-                      //         child: Obx(() => Text(
-                      //               controller.quantity.value.toString(),
-                      //               style: const TextStyle(fontSize: 40),
-                      //             )),
-                      //       ),
-                      //       IconButton(
-                      //         icon: const Icon(Icons.add),
-                      //         onPressed: controller.incrementQuantity,
-                      //       ),
-                      //     ],
-                      //   ),
-                      //   const SizedBox(height: 24),
-                      // ],
                       if (product.stock.inStock) ...[
                         Center(
                           // Added Center widget
@@ -294,6 +236,7 @@ class ProductDetailScreen extends StatelessWidget {
                                 icon: const Icon(Icons.remove, size: 40),
                                 onPressed: controller.decrementQuantity,
                               ),
+                              SizedBox(width: 40),
                               Container(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 16),
@@ -302,6 +245,7 @@ class ProductDetailScreen extends StatelessWidget {
                                       style: const TextStyle(fontSize: 60),
                                     )),
                               ),
+                              SizedBox(width: 40),
                               IconButton(
                                 icon: const Icon(Icons.add, size: 40),
                                 onPressed: controller.incrementQuantity,

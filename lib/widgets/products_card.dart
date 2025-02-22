@@ -130,7 +130,7 @@ class ProductCard extends StatelessWidget {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          product.price.formatted.price,
+                          product.price.formatted.discountedPrice,
                           style: const TextStyle(
                             color: AppColors.otherColor,
                             fontSize: 14,
@@ -142,8 +142,9 @@ class ProductCard extends StatelessWidget {
                           const SizedBox(width: 4),
                           Expanded(
                             child: Text(
-                              'was ${product.price.formatted.discountedPrice}',
+                              'was ${product.price.formatted.price}',
                               overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
                               style: TextStyle(
                                 color: Colors.grey[600],
                                 fontSize: 11,
@@ -156,16 +157,16 @@ class ProductCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     // Stock Status
-                    Text(
-                      product.stock.inStock ? 'In Stock' : 'Out of Stock',
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: product.stock.inStock
-                            ? Colors.green
-                            : AppColors.otherColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    // Text(
+                    //   product.stock.inStock ? 'In Stock' : 'Out of Stock',
+                    //   style: TextStyle(
+                    //     fontSize: 11,
+                    //     color: product.stock.inStock
+                    //         ? Colors.green
+                    //         : AppColors.otherColor,
+                    //     fontWeight: FontWeight.w500,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
