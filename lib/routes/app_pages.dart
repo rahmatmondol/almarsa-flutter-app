@@ -14,6 +14,7 @@ import 'package:almarsa/screens/notification/screen/notification_screen.dart';
 import 'package:almarsa/screens/order/screens/get_all_order.dart';
 import 'package:almarsa/screens/order/screens/make_order_screen.dart';
 import 'package:almarsa/screens/order/screens/re_order_screen.dart';
+import 'package:almarsa/screens/order/screens/thank_you_screen.dart';
 import 'package:almarsa/screens/product_details/screen/product_detail_screen.dart';
 import 'package:almarsa/screens/products_list/screen/product_list_screen.dart';
 import 'package:almarsa/screens/wish_list/screens/wishlist_page.dart';
@@ -101,6 +102,10 @@ class AppPages {
     GetPage(
       name: Routes.notificationScreen,
       page: () => NotificationScreen(),
+    ),
+    GetPage(
+      name: Routes.thankYouScreen,
+      page: () => ThankYouScreen(),
     ),
   ];
 }
